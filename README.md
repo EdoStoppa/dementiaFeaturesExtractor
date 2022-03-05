@@ -1,5 +1,7 @@
-# Dementia Features Extractor
+# *Dementia Features Extractor*
 The objective of this project is to create a modular program that is able to extract different kind of features from transcripts and audio files from DementiaBank. To obtain access to the actual data, you'l have to get access directly on the [DementiaBank website](https://dementia.talkbank.org/).
+
+---
 
 ## Prerequisites
 To run everything without problems I recommend to use Python 3.8+ and Linux/MacOs. Unfortunately, to extract some features it's required an old library (from 2014), and some parts of it, for some reason, refuse to work on Windows. It probably can be fixed, but I've no idea how.
@@ -36,6 +38,8 @@ Download all transcripts and audio files of the Pitt's Corpus from DementiaBank 
 --------> Dementia
 ```
 
+---
+
 ## How to run
 
 ### - All in one
@@ -45,6 +49,8 @@ After following the prerequisites section, to extract all the features simply ru
 Before running most of the individual scripts, it's better to run (always starting from the main folder) `python extractors/preprocess.py` and `python mp3_to_wav.py`.
 
 Then, to run any Feature Group, simply run `python extractors/FILE.py`, where "FILE" is the name of the desired file.
+
+---
 
 ## Credits
 Most of the code that compute the numerical features is an adapted and updated version of [this project](https://github.com/vmasrani/dementia_classifier/tree/master/dementia_classifier/feature_extraction/feature_sets). For the preprocessing I've taken some parts from [this other project](https://github.com/flaviodipalo/AlzheimerDetection). 
