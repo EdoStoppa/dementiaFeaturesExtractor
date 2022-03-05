@@ -1,0 +1,10 @@
+data/audio
+data/discourse_trees
+data/extracted
+data/transcripts
+data/pitt_full_interview.pickle
+extractors/feature_sets/lib/stanford
+extractors/feature_sets/lib/SCA/L2SCA/*
+!extractors/feature_sets/lib/SCA/L2SCA/analyzeText.py
+__pycache__
+__init__.py
