@@ -60,7 +60,6 @@ def get_all(path):
             with open(seg) as f:
                 sentences = f.readlines()
             key = tree.split(os.path.sep)[-1].split('_')[0]
-            print ("Processing " + key + " ...")
             features = {}
             features["depth"]    = get_depth(dpt)
             features["edu_rate"] = get_edu_rate(sentences)

@@ -42,4 +42,7 @@ def create_folders():
                 os.mkdir(os.path.join(sect_path, test))
 
 if __name__ =='__main__':
+    print('\nMp3 to Wav conversion started!\n')
     convert(need_folders=True, remove_mp3=False)
+    print('\nMp3 to Wav conversion finished!\n')
+    print('*****************************************************')

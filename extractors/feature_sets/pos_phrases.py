@@ -692,17 +692,3 @@ def get_all(interview):
         [getAvgVPTypeLengthNonEmbedded(utterance) for utterance in interview]) / len(interview)
 
     return features
-
-# For testing
-#------------------------------------------------
-
-# if __name__ == '__main__':
-# 	s0 = "this little boy here is taking cookies "
-# 	s1 = " This is a second sentence "
-# 	s2 = "This. Sentence has punctuation!"
-# 	s3 = "And this sentsce has spelling mistkaes"
-# 	s4 = "this little boy here is also taking cookies "
-# 	s5  = "An elephant fish pork monkey"
-# 	l = [s0, s1, s2, s3, s4, s5]
-# 	print 'avg_cos_dist', avg_cos_dist(l)
-# 	print 'proportion_below_threshold', proportion_below_threshold(l,0)

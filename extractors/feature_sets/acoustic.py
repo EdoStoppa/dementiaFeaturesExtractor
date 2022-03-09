@@ -72,7 +72,6 @@ def get_all(path):
         parsed_data = {}
         for filename in os.listdir(path):
             if filename.endswith(".wav"):
-                print ("Processing " + filename)
                 wavfile = os.path.join(path, filename)
                 feat = get_mfcc_features(wavfile)
                 feat["ff_mean"], feat["ff_var"] = get_fundamental_frequency_mean_var(path + "/pitches/" + filename.replace(".wav", ".txt"))

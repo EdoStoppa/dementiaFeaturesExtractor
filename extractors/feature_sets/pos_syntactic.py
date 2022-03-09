@@ -189,7 +189,6 @@ def get_ROOT_2_FRAG(tree_node):
 def get_all_syntactics_features(sample, base_folder=os.getcwd()):
     # Make a temporary file for writing to
     SCA_FOLDER = os.path.join('feature_sets', 'lib', 'SCA', 'L2SCA')
-    print(SCA_FOLDER)
     sample_file_name   = os.path.join(SCA_FOLDER, 'SCA_tmp_file.txt')
     sample_output_name = os.path.join(SCA_FOLDER, 'SCA_tmp_output.txt')
     

@@ -43,4 +43,7 @@ def extract_psycholinguistic():
     final_dataframe.to_csv(os.path.join('data', 'extracted', 'psycholinguistic_info.csv'))
 
 if __name__ == '__main__':
+    print('\nPsycholinguistic features extraction started!\n')
     extract_psycholinguistic()
+    print('\nPsycholinguistic features extraction finished!\n')
+    print('*****************************************************')

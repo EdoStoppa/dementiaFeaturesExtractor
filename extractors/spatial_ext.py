@@ -24,4 +24,7 @@ def extract_spatial():
     final_dataframe.to_csv(os.path.join('data', 'extracted', 'spatial_info.csv'))
 
 if __name__ == '__main__':
+    print('\nSpatial features extraction started!\n')
     extract_spatial()
+    print('\nSpatial features extraction finished!\n')
+    print('*****************************************************')

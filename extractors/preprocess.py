@@ -105,7 +105,7 @@ def generate_full_interview_dataframe():
                 for filename in files:
                     fullpath = os.path.join(path, filename)
                     with open(fullpath, 'r', encoding="utf8") as input_file:
-                        print('Parsing ' + filename)
+                        print('Preprocessing ' + filename + '...')
                         cleaned_file, id = clean_file(input_file)
                         parsed_file = parse_file_dementiabank(cleaned_file)
                         dementia_parsed[id] = (parsed_file, label)
@@ -113,11 +113,14 @@ def generate_full_interview_dataframe():
     return dementia_parsed
 
 def preprocess_data():
+    print('\nPreprocessing started!\n')
     # Generate the data
     data = generate_full_interview_dataframe()
     # Save all processed data
     with open(os.path.join('data', 'pitt_full_interview.pickle'), 'wb') as f:
         pickle.dump(data, f)
+    print('\nPreprocessing finished!\n')
+    print('*****************************************************')
 
 if __name__ =='__main__':
     preprocess_data()

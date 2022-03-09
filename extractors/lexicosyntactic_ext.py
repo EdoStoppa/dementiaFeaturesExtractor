@@ -24,4 +24,7 @@ def extract_lexicosyntactic():
     final_dataframe.to_csv(os.path.join('data', 'extracted', 'lexicosyntactic_info.csv'))
 
 if __name__ == '__main__':
+    print('\nLexicosyntactic features extraction started!\n')
     extract_lexicosyntactic()
+    print('\nLexicosyntactic features extraction finished!\n')
+    print('*****************************************************')

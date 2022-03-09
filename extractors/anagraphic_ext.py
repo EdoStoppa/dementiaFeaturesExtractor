@@ -3,15 +3,17 @@ import os
 
 
 def extract_anagraphic():
+    # Open the anagraphic data csv
     df = pd.read_csv(os.path.join('data', 'anagraphic_data', 'anagraphic_data.csv'))
 
     imputed_dict_list = []
 
     visit_dict = {'visit2':1,'visit3':2,'visit4':3,'visit5':4,'visit6':5,'visit7':6}
 
-    print('Preprocessing Anagraphic Files...')
+    
     for index, row in df.iterrows():
         id = str(row['id']).zfill(3)
+        print('Extracting ' + id + '...')
         entry_age = int(row['entryage'])
         initial_date = int(row['idate'].split('-')[-1])
 
@@ -41,4 +43,7 @@ def extract_anagraphic():
     final_dataframe.to_csv(os.path.join('data', 'extracted', 'anagraphic_info.csv'))
 
 if __name__ == '__main__':
+    print('\nAnagraphic Data extraction started!\n')
     extract_anagraphic()
+    print('\nAnagraphic Data extraction finished!\n')
+    print('*****************************************************')
