@@ -9,7 +9,9 @@ I recommend to use Python 3+ and Linux/MacOs to avoid any problems. Unfortunatel
 ### - External Libraries
 To run the preprocessing the Stanford CoreNLP library is required. It must be run in a separate terminal before the start of preprocessing. The latest version can be downloaded from [here](https://stanfordnlp.github.io/CoreNLP/download.html). After the download, it must be extracted and positioned under the folder `extractors/feature_sets/lib/standford/`, and the name of the folder must be set in `extractors/preprocess.py`. Everything was tested with version 3.6.0 (stanford-corenlp-full-2015-12-09), but it should also work with any following release. The command to run it from the main project folder is:
 
-```java -DIM -cp "extractors/feature_sets/lib/stanford/stanford-corenlp-full-2015-12-09/*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout 20000```
+```
+java -DIM -cp "extractors/feature_sets/lib/stanford/stanford-corenlp-full-2015-12-09/*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout 20000
+```
 
 Where instead of `-DIM` you'll have to substitute `-Xmx500m` if using Windows, or `-Xmx4g` if using Linux/MacOS.
 
