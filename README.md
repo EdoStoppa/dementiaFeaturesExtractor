@@ -1,15 +1,18 @@
 # *Dementia Features Extractor*
-The objective of this project is to create a modular program that is able to extract different kind of features from transcripts and audio files from DementiaBank. To obtain access to the actual data, you'l have to get access directly on the [DementiaBank website](https://dementia.talkbank.org/).
+The objective of this project is to create a modular program that is able to extract different kind of features from transcripts and audio files from DementiaBank. In particular the data used will be only the part associated with the Cookie Theft Picture test. To download the database, you'll have to get access directly on the [DementiaBank website](https://dementia.talkbank.org/).
 
 ---
 
 ## Prerequisites
-To run everything without problems I recommend to use Python 3.8+ and Linux/MacOs. Unfortunately, to extract some features it's required an old library (from 2014), and some parts of it, for some reason, refuse to work on Windows. It probably can be fixed, but I've no idea how.
+I recommend to use Python 3.8+ and Linux/MacOs to avoid any problems. Unfortunately, to extract some features it's required an old library (from 2016), and some parts of it, for some reason, refuse to work on Windows. It probably can be fixed, but I've no idea how.
 
 ### - External Libraries
-To run the preprocessing the Stanford CoreNLP library is required. It must be run in a separate terminal before the start of preprocessing. The latest version can be downloaded from [here](https://stanfordnlp.github.io/CoreNLP/download.html). After the download, it must be extracted and positioned under the folder `extractors/feature_sets/lib/standford/`, and the name of the folder must be set in `extractors/preprocess.py`. Everything was tested with version 3.6.0 (stanford-corenlp-full-2015-12-09), but it should also work with any following release.
+To run the preprocessing the Stanford CoreNLP library is required. It must be run in a separate terminal before the start of preprocessing. The latest version can be downloaded from [here](https://stanfordnlp.github.io/CoreNLP/download.html). After the download, it must be extracted and positioned under the folder `extractors/feature_sets/lib/standford/`, and the name of the folder must be set in `extractors/preprocess.py`. Everything was tested with version 3.6.0 (stanford-corenlp-full-2015-12-09), but it should also work with any following release. The command to run it from the main project folder is:
+```java -DIM -cp "extractors/feature_sets/lib/stanford/stanford-corenlp-full-2015-12-09/*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout 20000```
 
-The last thing needed is to download the L2SCA library from [here](http://www.personal.psu.edu/xxl13/downloads/l2sca.html). Then, extract its content, and put every file in the extracted folder inside `extractors/feature_sets/lib/SCA/L2SCA/` apart from the file `analyzeText.py` that I've modified to male it work with Python 3.
+Where instead of `-DIM` you'll have to substitute `-Xmx500m` if using Windows, or `-Xmx4g` if using Linux/MacOS.
+
+The last thing needed is the L2SCA library (downloadable from [here](http://www.personal.psu.edu/xxl13/downloads/l2sca.html)). Simply extract the downloaded zip, and put every file inside the obtained folder inside `extractors/feature_sets/lib/SCA/L2SCA/` apart from the file `analyzeText.py` that is already present in the project. This is because I've modified it to make it compatible with Python 3.
 
 ### - Python Libraries
 ```
@@ -23,20 +26,32 @@ The last thing needed is to download the L2SCA library from [here](http://www.pe
 ```
 
 ### - Data
-Download all transcripts and audio files of the Pitt's Corpus from DementiaBank (for the audio files I reccomend using the Multi-file Downloader for Chrome or Firefox). The anagraphic data is available without any special access right, so I've included the csv file directly in the repository. Then insert all files in the `data` folder following this folders structure:
+Download all transcripts and audio files of the Pitt's Corpus from DementiaBank (for the audio files I reccomend using the Multi-file Downloader extension for Chrome or Firefox). The anagraphic data is available without any special access right, so I've included the csv file directly in the repository. 
+
+Insert all files in the `data` folder following this folders structure:
+
 ```
 -> data
 ----> anagraphic_data
 ----> audiomp3
 --------> Control
+------------> 4 folders: "cookie", "fluency", "recall", and "sentence"
 --------> Dementia
+------------> 4 folders: "cookie", "fluency", "recall", and "sentence"
 ----> discourse_trees
+--------> control
+------------> 3 folders: "doc", "seg", and "sent"
+--------> dementia
+------------> 3 folders: "doc", "seg", and "sent"
 ----> extracted
 ----> SUBTLEX
 ----> transcripts
 --------> Control
+------------> 4 folders: "cookie", "fluency", "recall", and "sentence"
 --------> Dementia
+------------> 4 folders: "cookie", "fluency", "recall", and "sentence"
 ```
+For now everything that should be inside the folder `data/discourse_trees` will be provided directly from me. Just write me an email at estopp2@uic.edu and I'll send the data required. In the future I'll try to recreate the scripts necessary to generate this missing data and I'll include those in this repository.
 
 ---
 

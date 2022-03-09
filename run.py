@@ -1,3 +1,4 @@
+import os
 import mp3_to_wav
 from extractors import preprocess
 from extractors import acoustic_ext, anagraphic_ext, discourseBased_ext
@@ -8,7 +9,7 @@ from extractors import lexicosyntactic_ext, psycholinguistic_ext, spatial_ext
 # Please, run this file in the main directory of the project,
 # otherwise some problem amy arise
 
-def run():
+def extract_features():
     # First preprocess the data
     preprocess.preprocess_data()
 
@@ -24,4 +25,10 @@ def run():
     spatial_ext.extract_spatial()
 
 if __name__ == '__main__':
-    run()
+    # Check if the results directory is present, and if not create it
+    list_dirs = os.listdir('data')
+    if 'extracted' not in list_dirs:
+        os.mkdir(os.path.join('data', 'extracted'))
+    
+    # Start the feature extraction
+    extract_features()
