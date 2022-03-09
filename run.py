@@ -14,7 +14,7 @@ def extract_features():
     preprocess.preprocess_data()
 
     # Convert from mp3 to wav all the audio files
-    mp3_to_wav.convert()
+    mp3_to_wav.convert(remove_mp3=False, need_folders=True)
 
     # Extract all features and save them in different csv files
     acoustic_ext.extract_acoustic()

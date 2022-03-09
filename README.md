@@ -56,12 +56,13 @@ For now everything that should be inside the folder `data/discourse_trees` will 
 ---
 
 ## How to run
+Please pay attention to the mp3 to wav audio file conversion. It takes a lot of memory. To reduce the wasted space, you can set to True the paramenter called "remove_mp3" in the function `mp3_to_wav.convert()` in `run.py`. Doing so will delete the (now useless) old mp3 file immediately after the conversion.
 
 ### - All in one
 After following the prerequisites section, to extract all the features simply run the file `run.py` from the main folder using `python run.py`. The results will be in `data/extracted/`.
 
 ### - Individual Feature Group
-Before running most of the individual scripts, it's better to run (always starting from the main folder) `python extractors/preprocess.py` and `python mp3_to_wav.py`.
+Before running most of the individual scripts, you'll necessarily need to run (always starting from the main folder) `python extractors/preprocess.py`. If you're interest in the audio features you'll also have to run `python mp3_to_wav.py`.
 
 Then, to run any Feature Group, simply run `python extractors/FILE.py`, where "FILE" is the name of the desired file.
 

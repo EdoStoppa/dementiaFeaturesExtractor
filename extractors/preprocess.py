@@ -15,10 +15,6 @@ STANFORD_DIR = 'stanford-corenlp-full-2015-12-09'
 MEMORY_DIM = '-Xmx4g'
 
 def get_stanford_parse(sentence, port=9000):
-    # raw = sentence['raw']
-    # We want to iterate through k lines of the file and segment those lines as a session
-    # pattern = '[a-zA-Z]*=\\s'
-    # re.sub(pattern, '', raw)
     re.sub(r'[^\x00-\x7f]', r'', sentence)
     sentence = util.remove_control_chars(sentence)
     try:
