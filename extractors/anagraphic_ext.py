@@ -40,7 +40,7 @@ def extract_anagraphic():
                 imputed_dict_list.append(patient_dict)
 
     final_dataframe = pd.DataFrame(imputed_dict_list)
-    final_dataframe.to_csv(os.path.join('data', 'extracted', 'anagraphic_info.csv'))
+    final_dataframe.to_csv(os.path.join('data', 'extracted', 'anagraphic_info.csv'), index=False)
 
 if __name__ == '__main__':
     print('\nAnagraphic Data extraction started!\n')

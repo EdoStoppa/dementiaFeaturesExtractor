@@ -14,7 +14,7 @@ def extract_discourse_based():
             dataframe.append(new_dict)
 
     dataframe = pd.DataFrame(dataframe)
-    dataframe.to_csv(os.path.join('data', 'extracted', 'discourse_info.csv'))
+    dataframe.to_csv(os.path.join('data', 'extracted', 'discourse_info.csv'), index=False)
 
 if __name__ == '__main__':
     print('\nDiscourse-Based features extraction started!\n')

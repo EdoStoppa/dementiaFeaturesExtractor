@@ -21,7 +21,7 @@ def extract_spatial():
         final_dataframe.append(sp_dict)
 
     final_dataframe = pd.DataFrame(final_dataframe)
-    final_dataframe.to_csv(os.path.join('data', 'extracted', 'spatial_info.csv'))
+    final_dataframe.to_csv(os.path.join('data', 'extracted', 'spatial_info.csv'), index=False)
 
 if __name__ == '__main__':
     print('\nSpatial features extraction started!\n')

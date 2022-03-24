@@ -22,7 +22,7 @@ def extract_acoustic():
     cols = final_dataframe.columns.tolist()
     final_dataframe = final_dataframe[cols[-1:] + cols[:-1]]
 
-    final_dataframe.to_csv(os.path.join('data', 'extracted', 'acoustic_info.csv'))
+    final_dataframe.to_csv(os.path.join('data', 'extracted', 'acoustic_info.csv'), index=False)
 
 if __name__ == '__main__':
     print('\nAcoustic Data extraction started!\n')

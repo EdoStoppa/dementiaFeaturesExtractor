@@ -40,7 +40,7 @@ def extract_psycholinguistic():
 
     final_dataframe = pd.DataFrame(new_dataframe)
     final_dataframe.columns = ['id', 'familiarity', 'concreteness', 'imagability', 'aoa', 'SUBTLFreq', 'average_sentiment']
-    final_dataframe.to_csv(os.path.join('data', 'extracted', 'psycholinguistic_info.csv'))
+    final_dataframe.to_csv(os.path.join('data', 'extracted', 'psycholinguistic_info.csv'), index=False)
 
 if __name__ == '__main__':
     print('\nPsycholinguistic features extraction started!\n')

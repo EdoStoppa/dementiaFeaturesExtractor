@@ -21,7 +21,7 @@ def extract_lexicosyntactic():
         new_dataframe.append(lexsyn_dict)
 
     final_dataframe = pd.DataFrame(new_dataframe)
-    final_dataframe.to_csv(os.path.join('data', 'extracted', 'lexicosyntactic_info.csv'))
+    final_dataframe.to_csv(os.path.join('data', 'extracted', 'lexicosyntactic_info.csv'), index=False)
 
 if __name__ == '__main__':
     print('\nLexicosyntactic features extraction started!\n')
