@@ -8,7 +8,7 @@ file_names = os.listdir(DATA_DIR)
 # Remove the anagraphic info that will be treated later
 file_names.remove('anagraphic_info.csv')
 
-#################### Create a dataframe with the binary classification ####################
+#################### Create a dataframe with the binary classification label ####################
 print('Creating the binary classification dataframe...')
 
 # Load the pickle containing the entire processed dataset
@@ -17,7 +17,7 @@ with open(os.path.join('data', 'pitt_full_interview.pickle'), 'rb') as file:
 # Convert dictionary to a list
 full_data_list = [[id, 1 if data[1] == 'Dementia' else 0] for id, data in full_interw_dict.items()]
 # Create and save the binary classification dataset
-bin_class = pd.DataFrame(full_data_list, columns=['id', 'label'])
+bin_class = pd.DataFrame(full_data_list, columns=['id', 'bin_class'])
 bin_class = bin_class.set_index('id')
 
 print('Creation complete\n')
@@ -35,14 +35,24 @@ for file in file_names:
 
 print('Creation complete\n')
 
-#################### Create a dataframe with anagraphic features ####################
+#################### Create a dataframe with anagraphic features and add multiclassification feature ####################
 print('Creating the anagraphic dataframe...')
 
 # Loading anagraphic info
 anagraphic = pd.read_csv(os.path.join(DATA_DIR, 'anagraphic_info.csv'), index_col=0)
 anagraphic = anagraphic.join(bin_class, how='inner')
+# Create the multiclass classification feature
+multi_class = []
+for mmse in anagraphic['mmse']:
+    if mmse >= 30:   multi_class.append(0)
+    elif mmse >= 26: multi_class.append(1)
+    elif mmse >= 19: multi_class.append(2)
+    elif mmse >= 10: multi_class.append(3)
+    else:            multi_class.append(4)
+anagraphic['multi_class'] = multi_class
+# Reorganize columns
 cols = anagraphic.columns.tolist()
-cols = cols[-2:] + cols[:-2]
+cols = cols[-3:] + cols[:-3]
 anagraphic = anagraphic[cols]
 
 print('Creation complete\n')
