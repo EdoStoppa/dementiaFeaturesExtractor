@@ -1,5 +1,6 @@
 import os
 import mp3_to_wav
+import merge_data
 from extractors import preprocess
 from extractors import acoustic_ext, anagraphic_ext, discourseBased_ext
 from extractors import lexicosyntactic_ext, psycholinguistic_ext, spatial_ext
@@ -23,6 +24,9 @@ def extract_features():
     lexicosyntactic_ext.extract_lexicosyntactic()
     psycholinguistic_ext.extract_psycholinguistic()
     spatial_ext.extract_spatial()
+
+    # Merge all datasets into a single csv file
+    merge_data.merge_datasets()
 
 if __name__ == '__main__':
     # Check if the results directory is present, and if not create it
