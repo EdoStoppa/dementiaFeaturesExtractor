@@ -30,7 +30,7 @@ def extract_features():
     spatial_ext.extract_spatial(prj_dir)
 
     # Merge all datasets into a single csv file
-    merge_data.merge_datasets()
+    merge_data.merge_datasets(prj_dir)
 
 if __name__ == '__main__':
     # Check if the results directory is present, and if not create it
