@@ -20,7 +20,7 @@ def extract_features():
     # Extract all features and save them in different csv files
     acoustic_ext.extract_acoustic()
     anagraphic_ext.extract_anagraphic()
-    discourseBased_ext.extract_discours_based()
+    discourseBased_ext.extract_discourse_based()
     lexicosyntactic_ext.extract_lexicosyntactic()
     psycholinguistic_ext.extract_psycholinguistic()
     spatial_ext.extract_spatial()
