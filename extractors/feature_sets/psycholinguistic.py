@@ -4,11 +4,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import string
 from functools import reduce
 import pandas as pd
+import os
 
-
-# Global psycholinguistic data structures
-
-FEATURE_DATA_PATH = 'feature_sets/psycholing_scores/'
 
 # Made global so files only need to be read once
 psycholinguistic_scores = {}
@@ -104,10 +101,10 @@ def getAllNonStopWordsFromInterview(interview):
 # Notes: Makes dict mapping words to score, store dict in psycholinguistic
 
 
-def _load_scores(name):
+def _load_scores(feature_data_path, name):
     if name not in FEATURE_DATA_LIST:
         raise ValueError("name must be one of: " + str(FEATURE_DATA_LIST))
-    with open(FEATURE_DATA_PATH + name) as file:
+    with open(os.path.join(feature_data_path, name)) as file:
         d = {word.lower(): float(score) for (score, word) in [line.strip().split(" ") for line in file]}
         psycholinguistic_scores[name] = d
 
@@ -115,11 +112,11 @@ def _load_scores(name):
 # Output: PsycholinguisticScore for a given measure
 
 
-def getPsycholinguisticScore(interview, measure):
+def getPsycholinguisticScore(interview, path_to_measures, measure):
     if measure not in FEATURE_DATA_LIST:
         raise ValueError("name must be one of: " + str(FEATURE_DATA_LIST))
     if measure not in psycholinguistic_scores:
-        _load_scores(measure)
+        _load_scores(path_to_measures, measure)
     score = 0
     validwords = 1
     allwords = getAllNonStopWordsFromInterview(interview)
@@ -715,12 +712,12 @@ def proportion_below_threshold(uttrs, thresh):
 # returns: list of features for each interview
 
 
-def get_psycholinguistic_features(interview, subtl_path):
+def get_psycholinguistic_features(interview, subtl_path, path_to_measures):
     feat_dict = {}
-    feat_dict["getFamiliarityScore"] = getPsycholinguisticScore(interview, 'familiarity')
-    feat_dict["getConcretenessScore"] = getPsycholinguisticScore(interview, 'concreteness')
-    feat_dict["getImageabilityScore"] = getPsycholinguisticScore(interview, 'imageability')
-    feat_dict["getAoaScore"] = getPsycholinguisticScore(interview, 'aoa')
+    feat_dict["getFamiliarityScore"] = getPsycholinguisticScore(interview, path_to_measures, 'familiarity')
+    feat_dict["getConcretenessScore"] = getPsycholinguisticScore(interview, path_to_measures, 'concreteness')
+    feat_dict["getImageabilityScore"] = getPsycholinguisticScore(interview, path_to_measures, 'imageability')
+    feat_dict["getAoaScore"] = getPsycholinguisticScore(interview, path_to_measures, 'aoa')
     feat_dict["getSUBTLWordScores"] = getSUBTLWordScores(interview, subtl_path)
 
     #feat_dict["getLightVerbCount"] = getLightVerbCount(interview)

@@ -4,10 +4,11 @@ import pandas as pd
 import pickle
 import os
 
-def extract_psycholinguistic():
+def extract_psycholinguistic(prj_dir: str):
     sid = SentimentIntensityAnalyzer()
-
-    with open(os.path.join('data', 'pitt_full_interview.pickle'), "rb") as file:
+    
+    inter_pickle_path = os.path.join(prj_dir, 'data', 'pitt_full_interview.pickle')
+    with open(inter_pickle_path, "rb") as file:
         data = pickle.load(file)
 
     new_dataframe = []
@@ -28,8 +29,9 @@ def extract_psycholinguistic():
         else:
             average_sentiment = 0
 
-        subl_path = os.path.join('data', 'SUBTLEX', 'SUBTLEX.csv')
-        dict = get_psycholinguistic_features(full_interview, subl_path)
+        subl_path = os.path.join(prj_dir, 'data', 'SUBTLEX', 'SUBTLEX.csv')
+        path_to_measures = os.path.join(prj_dir, 'extractors', 'feature_sets', 'psycholing_scores')
+        dict = get_psycholinguistic_features(full_interview, subl_path, path_to_measures)
         dict['average_sentiment'] = average_sentiment
 
         additional_features = []
@@ -38,12 +40,13 @@ def extract_psycholinguistic():
 
         new_dataframe.append([key] + additional_features)
 
-    final_dataframe = pd.DataFrame(new_dataframe)
-    final_dataframe.columns = ['id', 'familiarity', 'concreteness', 'imagability', 'aoa', 'SUBTLFreq', 'average_sentiment']
-    final_dataframe.to_csv(os.path.join('data', 'extracted', 'psycholinguistic_info.csv'), index=False)
+    final_path = os.path.join(prj_dir, 'data', 'extracted', 'psycholinguistic_info.csv')
+    final_df = pd.DataFrame(new_dataframe)
+    final_df.columns = ['id', 'familiarity', 'concreteness', 'imagability', 'aoa', 'SUBTLFreq', 'average_sentiment']
+    final_df.to_csv(final_path, index=False)
 
 if __name__ == '__main__':
     print('\nPsycholinguistic features extraction started!\n')
-    extract_psycholinguistic()
+    extract_psycholinguistic(os.getcwd())
     print('\nPsycholinguistic features extraction finished!\n')
     print('*****************************************************')

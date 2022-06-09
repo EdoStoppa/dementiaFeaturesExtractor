@@ -21,9 +21,10 @@ def multiclass5(mmse):
     elif mmse >= 10: return 3
     else:            return 4
 
-def extract_anagraphic():
+def extract_anagraphic(prj_dir: str):
     # Open the anagraphic data csv
-    df = pd.read_csv(os.path.join('data', 'anagraphic_data', 'anagraphic_data.csv'))
+    anagraphic_path = os.path.join(prj_dir, 'data', 'anagraphic_data', 'anagraphic_data.csv')
+    df = pd.read_csv(anagraphic_path)
 
     imputed_dict_list = []
 
@@ -37,7 +38,7 @@ def extract_anagraphic():
         initial_date = int(row['idate'].split('-')[-1])
 
         patient_dict = {
-            'id': id+'-0',
+            'id': id + '-0',
             'age': entry_age,
             'sex': row['sex'],
             'race': row['race'],
@@ -68,7 +69,8 @@ def extract_anagraphic():
     anagraphic = anagraphic.set_index('id')
 
     # Load the pickle containing the entire processed dataset
-    with open(os.path.join('data', 'pitt_full_interview.pickle'), 'rb') as file: 
+    data_path = os.path.join(prj_dir, 'data', 'pitt_full_interview.pickle')
+    with open(data_path, 'rb') as file: 
         full_interw_dict = pickle.load(file)
     # Convert dictionary to a list containing the binary classes values
     bin_data = [[id, 1 if data[1] == 'Dementia' else 0] for id, data in full_interw_dict.items()]
@@ -84,13 +86,12 @@ def extract_anagraphic():
     cols = cols[-5:] + cols[:-5]
     final_dataframe = anagraphic[cols]
 
-    print('\nFinal Dataset head:\n', final_dataframe.head())
-
     # Save the anagraphic info
-    final_dataframe.to_csv(os.path.join('data', 'extracted', 'anagraphic_info.csv'))
+    final_path = os.path.join(prj_dir, 'data', 'extracted', 'anagraphic_info.csv')
+    final_dataframe.to_csv(final_path)
 
 if __name__ == '__main__':
     print('\nAnagraphic Data extraction started!\n')
-    extract_anagraphic()
+    extract_anagraphic(os.getcwd())
     print('\nAnagraphic Data extraction finished!\n')
     print('*****************************************************')

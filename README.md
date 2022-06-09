@@ -7,7 +7,7 @@ The objective of this project is to create a modular program that is able to ext
 I recommend to use Python 3+ and Linux/MacOs to avoid any problems. Unfortunately, to extract some features it's required an old library (from 2016), and some parts of it, for some reason, refuse to work on Windows. It probably can be fixed, but I've no idea how.
 
 ### - External Libraries
-To run the preprocessing the Stanford CoreNLP library is required. It must be run in a separate terminal before the start of preprocessing. The latest version can be downloaded from [here](https://stanfordnlp.github.io/CoreNLP/download.html). After the download, it must be extracted and positioned under the folder `extractors/feature_sets/lib/standford/`, and the name of the folder must be set in `extractors/preprocess.py`. Everything was tested with version 3.6.0 (stanford-corenlp-full-2015-12-09), but it should also work with any following release. The command to run it from the main project folder is:
+To run the preprocessing the Stanford CoreNLP library is required. It must be run in a separate terminal before the start of preprocessing. The latest version can be downloaded from [here](https://stanfordnlp.github.io/CoreNLP/download.html). After the download, it must be extracted and positioned under the folder `extractors/feature_sets/lib/stanford/`, and the name of the folder must be set in `extractors/preprocess.py`. Everything was tested with version 3.6.0 (stanford-corenlp-full-2015-12-09), but it should also work with any following release. The command to run it from the main project folder is:
 
 ```
 java -DIM -cp "extractors/feature_sets/lib/stanford/stanford-corenlp-full-2015-12-09/*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout 20000
@@ -34,25 +34,35 @@ Download all transcripts and audio files of the Pitt's Corpus from DementiaBank 
 Insert all files in the `data` folder following this folders structure:
 
 ```
--> data
-----> anagraphic_data
-----> audiomp3
---------> Control
-------------> 4 folders: "cookie", "fluency", "recall", and "sentence"
---------> Dementia
-------------> 4 folders: "cookie", "fluency", "recall", and "sentence"
-----> discourse_trees
---------> control
-------------> 3 folders: "doc", "seg", and "sent"
---------> dementia
-------------> 3 folders: "doc", "seg", and "sent"
-----> extracted
-----> SUBTLEX
-----> transcripts
---------> Control
-------------> 4 folders: "cookie", "fluency", "recall", and "sentence"
---------> Dementia
-------------> 4 folders: "cookie", "fluency", "recall", and "sentence"
+data
+│
+├── anagraphic_data/
+│
+├── audiomp3/
+│   ├── Control/
+│   │   └── cookie/
+│   └── Dementia/
+│       └── cookie/
+│
+├── discours_trees/
+│   ├── control/
+│   │   ├── doc/
+│   │   ├── seg/
+│   │   └── sent/
+│   └── dementia/
+│       ├── doc/
+│       ├── seg/
+│       └── sent/
+│
+├── extracted/
+│
+├── SUBTLEX/
+│
+└── transcripts/
+    ├── Control/
+    │   └── cookie/
+    └── Dementia/
+        └── cookie/
 ```
 For now everything that should be inside the folder `data/discourse_trees` will be provided directly from me. Just write me an email at estopp2@uic.edu and I'll send the data required. In the future I'll try to recreate the scripts necessary to generate this missing data and I'll include those in this repository.
 

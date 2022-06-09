@@ -4,8 +4,9 @@ import pandas as pd
 from feature_sets.pos_phrases import get_all as get_all_phrases
 from feature_sets.pos_syntactic import get_all as get_all_syn
 
-def extract_lexicosyntactic():
-    with open(os.path.join('data', 'pitt_full_interview.pickle'), "rb") as file:
+def extract_lexicosyntactic(prj_dir: str):
+    inter_pickle_path = os.path.join(prj_dir, 'data', 'pitt_full_interview.pickle')
+    with open(inter_pickle_path, "rb") as file:
         data = pickle.load(file)
 
     new_dataframe = []
@@ -19,12 +20,13 @@ def extract_lexicosyntactic():
         lexsyn_dict.update(get_all_syn(full_interview))
 
         new_dataframe.append(lexsyn_dict)
-
-    final_dataframe = pd.DataFrame(new_dataframe)
-    final_dataframe.to_csv(os.path.join('data', 'extracted', 'lexicosyntactic_info.csv'), index=False)
+    
+    final_path = os.path.join(prj_dir, 'data', 'extracted', 'lexicosyntactic_info.csv')
+    final_df = pd.DataFrame(new_dataframe)
+    final_df.to_csv(final_path, index=False)
 
 if __name__ == '__main__':
     print('\nLexicosyntactic features extraction started!\n')
-    extract_lexicosyntactic()
+    extract_lexicosyntactic(os.getcwd())
     print('\nLexicosyntactic features extraction finished!\n')
     print('*****************************************************')

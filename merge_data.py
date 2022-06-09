@@ -1,9 +1,9 @@
 import pandas as pd
 import os
 
-def merge_datasets():
+def merge_datasets(prj_dir: str):
     # Generate the path to all partial datasets
-    data_dir = os.path.join('.', 'data', 'extracted')
+    data_dir = os.path.join(prj_dir, 'data', 'extracted')
     # Generate a list of datasets names
     file_names = os.listdir(data_dir)
     # Remove the anagraphic info that will be treated later
@@ -27,11 +27,11 @@ def merge_datasets():
 
     anagraphic = pd.read_csv(os.path.join(data_dir, 'anagraphic_info.csv'), index_col=0)
     final_dataset = anagraphic.join(final_dataset, how='inner')
-    final_dataset.to_csv(os.path.join('.', 'data', 'feature_dataset.csv'))
+    final_dataset.to_csv(os.path.join(prj_dir, 'data', 'feature_dataset.csv'))
 
     print('Everything complete!')
     print('Final Dataset:\n')
     print(final_dataset.head())
 
 if __name__ == '__main__':
-    merge_datasets()
+    merge_datasets(os.getcwd())

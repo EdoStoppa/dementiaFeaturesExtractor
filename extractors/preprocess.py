@@ -92,7 +92,7 @@ def clean_file(input_file):
                 cleaned_file.append(cleaned_string)
     return cleaned_file, id
 
-def generate_full_interview_dataframe():
+def generate_full_interview_dataframe(prj_dir: str):
     """
     generates the pandas dataframe containing for each interview its label.
     :return: pandas dataframe.
@@ -100,7 +100,7 @@ def generate_full_interview_dataframe():
     dementia_parsed = {}
     for label in ["Control", "Dementia"]:
         for test in ['cookie']:
-            PATH = os.path.join('data', 'transcripts', label, test)
+            PATH = os.path.join(prj_dir, 'data', 'transcripts', label, test)
             for path, dirs, files in os.walk(PATH):
                 for filename in files:
                     fullpath = os.path.join(path, filename)
@@ -112,12 +112,13 @@ def generate_full_interview_dataframe():
     
     return dementia_parsed
 
-def preprocess_data():
+def preprocess_data(prj_dir: str):
     print('\nPreprocessing started!\n')
     # Generate the data
-    data = generate_full_interview_dataframe()
+    data = generate_full_interview_dataframe(prj_dir)
     # Save all processed data
-    with open(os.path.join('data', 'pitt_full_interview.pickle'), 'wb') as f:
+    final_path = os.path.join(prj_dir, 'data', 'pitt_full_interview.pickle')
+    with open(final_path, 'wb') as f:
         pickle.dump(data, f)
     print('\nPreprocessing finished!\n')
     print('*****************************************************')

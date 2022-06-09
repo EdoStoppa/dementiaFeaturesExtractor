@@ -1,18 +1,17 @@
 import os
-from re import T
 from pydub import AudioSegment
 
 # need_folders: True if you've not already created the folders for the audio wav files
 # remove_mp3: True if you want to delete the file mp3 immediately after the wav conversion (saves space)
 
-def convert(need_folders=True, remove_mp3=False):
+def convert(prj_dir: str, need_folders: bool = True, remove_mp3: bool = False):
     # Create empty folders with the correct structure
-    if need_folders: create_folders()
-    mp3_dir = os.path.join('data', 'audiomp3')
-    wav_dir = os.path.join('data', 'audio')
+    if need_folders: create_folders(prj_dir)
+    mp3_dir = os.path.join(prj_dir, 'data', 'audiomp3')
+    wav_dir = os.path.join(prj_dir, 'data', 'audio')
 
     for section in ['Control', 'Dementia']:
-        for test in ['cookie', 'fluency', 'recall', 'sentence']:
+        for test in ['cookie']:
             # Generate the complete directory path
             dir_path = os.path.join(mp3_dir, section, test)
             # Get all mp3 file names
@@ -29,8 +28,8 @@ def convert(need_folders=True, remove_mp3=False):
                 # If option enable, simply delete the old mp3 file
                 if remove_mp3: os.remove(mp3_path)
 
-def create_folders():
-    base = os.path.join(os.getcwd(), 'data')
+def create_folders(prj_dir: str):
+    base = os.path.join(prj_dir, 'data')
     dirs = os.listdir(base)
     if 'audio' not in dirs:
         audio_path = os.path.join(base, 'audio')
@@ -38,11 +37,11 @@ def create_folders():
         for section in ['Control', 'Dementia']:
             sect_path = os.path.join(audio_path, section)
             os.mkdir(sect_path)
-            for test in ['cookie', 'fluency', 'recall', 'sentence']:
+            for test in ['cookie']:
                 os.mkdir(os.path.join(sect_path, test))
 
 if __name__ =='__main__':
     print('\nMp3 to Wav conversion started!\n')
-    convert(need_folders=True, remove_mp3=False)
+    convert(os.getcwd(), need_folders=True, remove_mp3=False)
     print('\nMp3 to Wav conversion finished!\n')
     print('*****************************************************')
