@@ -14,6 +14,7 @@ from extractors import lexicosyntactic_ext, psycholinguistic_ext, spatial_ext
 def extract_features():
     # Extract the path pointing to the directory containing this file
     prj_dir = str(Path(__file__).parent.absolute())
+    print(prj_dir)
 
     # First preprocess the data
     preprocess.preprocess_data(prj_dir)
@@ -41,3 +42,6 @@ if __name__ == '__main__':
     # Start the feature extraction
     extract_features()
     print('\nEverything completed!\n')
+
+if __name__ == "__main__":
+    extract_features()

@@ -48,7 +48,7 @@ def preprocess_utterance(uttr):
     pt_list = []
     bd_list = []
     for u in util.split_string_by_words(uttr, 50): # 50 = max number of words in a utterance
-        if u is not "":
+        if u != "":
             stan_parse = get_stanford_parse(u)
             pt_list.append(stan_parse["parse"])
             bd_list.append(stan_parse["basic-dependencies"])
