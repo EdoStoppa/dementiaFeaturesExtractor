@@ -1,4 +1,4 @@
-from feature_sets.psycholinguistic import get_spatial_features
+from feature_sets.spatial import get_spatial_features
 import pandas as pd
 import pickle
 import os
