@@ -42,6 +42,3 @@ if __name__ == '__main__':
     # Start the feature extraction
     extract_features()
     print('\nEverything completed!\n')
-
-if __name__ == "__main__":
-    extract_features()
