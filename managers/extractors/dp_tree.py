@@ -1,8 +1,6 @@
 # Author: Jordon Johnson
 
 import re
-from collections import Counter
-# import numpy as np
 
 #
 # Represents a node in a DiscourseParseTree
@@ -200,26 +198,3 @@ def get_text(line):
     else:
         return None
 
-
-def mean(arr):
-    return sum(arr) / float(len(arr))
-
-# --------------
-# For testing
-# --------------
-if __name__ == '__main__':
-    BREAK = 'EDU_BREAK'
-    with open("../data/dbank/discourse_trees/control/doc/280-2_doc.dis") as f:
-        lines = f.readlines()
-    dpt = DiscourseParseTree(lines)
-    import pdb
-    pdb.set_trace()
-
-    # with open('seg_001-0.txt') as f:
-    #     lines = f.readlines()
-
-    # edus = []
-    # for l in lines:
-    #     edus.append(1 + l.count(BREAK))
-
-    # print mean(edus)

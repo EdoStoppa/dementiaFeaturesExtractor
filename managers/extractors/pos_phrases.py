@@ -2,7 +2,7 @@
 from __future__ import division
 import nltk
 from collections import Counter
-from feature_sets.pos_syntactic import build_tree
+from extractors.pos_syntactic import build_tree
 import math
 
 

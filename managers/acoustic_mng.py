@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from feature_sets.acoustic import get_mfcc_features
+from extractors.acoustic import get_mfcc_features
 
 # Feature truncated
 # TO CHECK : look at https://github.com/jameslyons/python_speech_features/issues/74

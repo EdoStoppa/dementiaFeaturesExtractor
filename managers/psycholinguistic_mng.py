@@ -1,4 +1,4 @@
-from feature_sets.psycholinguistic import get_psycholinguistic_features
+from extractors.psycholinguistic import get_psycholinguistic_features
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import pandas as pd
 import pickle
@@ -30,7 +30,7 @@ def extract_psycholinguistic(prj_dir: str):
             average_sentiment = 0
 
         subl_path = os.path.join(prj_dir, 'data', 'SUBTLEX', 'SUBTLEX.csv')
-        path_to_measures = os.path.join(prj_dir, 'extractors', 'feature_sets', 'psycholing_scores')
+        path_to_measures = os.path.join(prj_dir, 'managers', 'extractors', 'psycholing_scores')
         dict = get_psycholinguistic_features(full_interview, subl_path, path_to_measures)
         dict['average_sentiment'] = average_sentiment
 

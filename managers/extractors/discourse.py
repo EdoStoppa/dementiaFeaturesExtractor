@@ -1,5 +1,5 @@
 import os
-from feature_sets.dp_tree import DiscourseParseTree
+from extractors.dp_tree import DiscourseParseTree
 
 DISCOURSE_RELATIONS = ["Attribution",
                        "Background",
@@ -79,7 +79,3 @@ def get_all(path):
     else:
         raise IOError("File not found: " + path + " does not exist")
     return parsed_data
-
-
-if __name__ == '__main__':
-    get_all("../data/dbank/discourse_trees/control")

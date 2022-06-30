@@ -1,5 +1,4 @@
-import feature_sets.lib.SCA.L2SCA.analyzeText as at
-import pickle
+import extractors.lib.SCA.L2SCA.analyzeText as at
 import os
 
 auxiliary_dependencies = frozenset([
@@ -188,11 +187,11 @@ def get_ROOT_2_FRAG(tree_node):
 
 def get_all_syntactics_features(sample, base_folder=os.getcwd()):
     # Make a temporary file for writing to
-    SCA_FOLDER = os.path.join('feature_sets', 'lib', 'SCA', 'L2SCA')
+    SCA_FOLDER = os.path.join(base_folder, 'managers', 'extractors', 'lib', 'SCA', 'L2SCA')
     sample_file_name   = os.path.join(SCA_FOLDER, 'SCA_tmp_file.txt')
     sample_output_name = os.path.join(SCA_FOLDER, 'SCA_tmp_output.txt')
     
-    rawtext = ''.join([utterance['raw'] for utterance in sample])
+    rawtext = ' '.join([utterance['raw'] for utterance in sample])
     
     with open(sample_file_name, 'w+') as f:
         f.write(rawtext)
@@ -219,7 +218,7 @@ def get_number_of_nodes_in_tree(root_node):
 
 
 def get_CFG_counts(root_node, dict):
-    if dict.has_key(root_node.key):
+    if root_node.key in dict:
         dict[root_node.key] += 1
     if len(root_node.children) > 0:  # Child leaf
         for child in root_node.children:
@@ -265,7 +264,7 @@ def get_all_tree_features(sample):
             features['VP_to_AUX_ADJP'] += get_VP_2_AUXADJP(root_node, dependents)
 
     #================ DIVIDING BY NUMBER OF total nodes in the sample ===============#
-    for k, v in features.iteritems():
+    for k, v in features.items():
         features[k] /= float(total_nodes)
 
     return features
@@ -303,7 +302,7 @@ def get_all_CFG_features(sample):
             total_nodes += get_number_of_nodes_in_tree(root_node)
             CFG_counts = get_CFG_counts(root_node, CFG_counts)
     # ---- Normalize by total number of constituents in the sample
-    for k, v in CFG_counts.iteritems():
+    for k, v in CFG_counts.items():
         CFG_counts[k] /= float(total_nodes)
     return CFG_counts
 
@@ -326,12 +325,3 @@ def print_tree(root_node):
             print("phrase = " + node.phrase)
         for child in node.children:
             queue.append(child)
-
-
-if __name__ == '__main__':
-    with open('../stanford/processed/pickles/dbank_control.pickle', 'rb') as handle:
-        control = pickle.load(handle)
-    test_set = control[1:]
-    features = []
-    for interview in test_set:
-        features.append(get_all_CFG_features(interview))

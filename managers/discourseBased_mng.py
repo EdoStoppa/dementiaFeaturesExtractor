@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from feature_sets.discourse import get_all
+from extractors.discourse import get_all
 
 def extract_discourse_based(prj_dir: str):
     dataframe = []

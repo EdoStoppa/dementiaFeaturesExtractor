@@ -7,7 +7,7 @@ The objective of this project is to create a modular program that is able to ext
 I recommend to use Python 3+ and Linux/MacOs to avoid any problems. Unfortunately, to extract some features it's required an old library (from 2016), and some parts of it, for some reason, refuse to work on Windows. It probably can be fixed, but I've no idea how.
 
 ### - External Libraries
-First, download the libraries from [here](https://drive.google.com/file/d/1O_rvaWWaNn3vxDMbxf3GMlabx9sWbiMG/view?usp=sharing). Then, extract it and place the `lib` folder into `extractors/feature_sets/`. Now every extrenal library outside of Python should be ready to be used.
+First, download the libraries from [here](https://drive.google.com/file/d/1O_rvaWWaNn3vxDMbxf3GMlabx9sWbiMG/view?usp=sharing). Then, extract it and place the `lib` folder into `managers/extractors/`. Now every extrenal library outside of Python should be ready to be used.
 To run the preprocessing the Stanford CoreNLP library is required. It must be run in a separate terminal before the start of preprocessing. The command to run it from the main project folder is:
 
 ```
@@ -71,11 +71,11 @@ For now everything that should be inside the folder `data/discourse_trees` will 
 Please pay attention to the mp3 to wav audio file conversion. It takes a lot of memory. To reduce the wasted space, you can set to True the paramenter called "remove_mp3" in the function `mp3_to_wav.convert()` in `run.py`. Doing so will delete the (now useless) old mp3 file immediately after the conversion.
 
 ### - All in one
-After following the prerequisites section, to extract all the features simply run the file `run.py` from the main folder using `python run.py`. The results will be in `data/extracted/`.
+After following the prerequisites section, to extract all the features simply run the file `run.py` from the main folder using `python run.py`. The results will be in `data/extracted/`. To be sure that everything goes well, I recommend to run the command with as sudo: `sudo python run.py`.
 
 ### - Individual Feature Group
 Before running most of the individual scripts, you'll necessarily need to run (always starting from the main folder)<br />
-`python extractors/preprocess.py`. If you're interest in the audio features you'll also have to run `python mp3_to_wav.py`.
+`python managers/preprocess.py`. If you're interest in the audio features you'll also have to run `python mp3_to_wav.py`.
 
 Then, to run any Feature Group, simply run `python extractors/FILE.py`, where "FILE" is the name of the desired file.
 

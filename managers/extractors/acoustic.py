@@ -79,7 +79,3 @@ def get_all(path):
         return parsed_data
     else:
         raise IOError("File not found: " + path + " does not exist")
-
-
-if __name__ == '__main__':
-    get_all("../data/soundfiles/control")

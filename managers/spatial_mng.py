@@ -1,4 +1,4 @@
-from feature_sets.spatial import get_spatial_features
+from extractors.spatial import get_spatial_features
 import pandas as pd
 import pickle
 import os

@@ -5,5 +5,5 @@ data/extracted
 data/transcripts
 data/pitt_full_interview.pickle
 data/feature_dataset.csv
-extractors/feature_sets/lib
+managers/extractors/lib
 __pycache__

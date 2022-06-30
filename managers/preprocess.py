@@ -5,7 +5,7 @@ import re
 import requests
 import nltk
 from collections import defaultdict
-import feature_sets.util as util
+import extractors.util as util
 import nltk.data
 import pickle
 
