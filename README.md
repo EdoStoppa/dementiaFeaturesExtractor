@@ -7,15 +7,14 @@ The objective of this project is to create a modular program that is able to ext
 I recommend to use Python 3+ and Linux/MacOs to avoid any problems. Unfortunately, to extract some features it's required an old library (from 2016), and some parts of it, for some reason, refuse to work on Windows. It probably can be fixed, but I've no idea how.
 
 ### - External Libraries
-To run the preprocessing the Stanford CoreNLP library is required. It must be run in a separate terminal before the start of preprocessing. The latest version can be downloaded from [here](https://stanfordnlp.github.io/CoreNLP/download.html). After the download, it must be extracted and positioned under the folder `extractors/feature_sets/lib/stanford/`, and the name of the folder must be set in `extractors/preprocess.py`. Everything was tested with version 3.6.0 (stanford-corenlp-full-2015-12-09), but it should also work with any following release. The command to run it from the main project folder is:
+First, download the libraries from [here](https://drive.google.com/file/d/1O_rvaWWaNn3vxDMbxf3GMlabx9sWbiMG/view?usp=sharing). Then, extract it and place the `lib` folder into `extractors/feature_sets/`. Now every extrenal library outside of Python should be ready to be used.<br \>
+To run the preprocessing the Stanford CoreNLP library is required. It must be run in a separate terminal before the start of preprocessing. The command to run it from the main project folder is:
 
 ```
 java -DIM -cp "extractors/feature_sets/lib/stanford/stanford-corenlp-full-2015-12-09/*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port 9000 -timeout 20000
 ```
 
 Where instead of `-DIM` you'll have to substitute `-Xmx500m` if using Windows, or `-Xmx4g` if using Linux/MacOS.
-
-The last thing needed is the L2SCA library (downloadable from [here](http://www.personal.psu.edu/xxl13/downloads/l2sca.html)). Simply extract the downloaded zip, and put every file inside the obtained folder inside `extractors/feature_sets/lib/SCA/L2SCA/` apart from the file `analyzeText.py` that is already present in the project. This is because I've modified it to make it compatible with Python 3.
 
 ### - Python Libraries
 ```
