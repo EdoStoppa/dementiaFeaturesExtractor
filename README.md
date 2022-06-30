@@ -7,7 +7,7 @@ The objective of this project is to create a modular program that is able to ext
 I recommend to use Python 3+ and Linux/MacOs to avoid any problems. Unfortunately, to extract some features it's required an old library (from 2016), and some parts of it, for some reason, refuse to work on Windows. It probably can be fixed, but I've no idea how.
 
 ### - External Libraries
-First, download the libraries from [here](https://drive.google.com/file/d/1O_rvaWWaNn3vxDMbxf3GMlabx9sWbiMG/view?usp=sharing). Then, extract it and place the `lib` folder into `extractors/feature_sets/`. Now every extrenal library outside of Python should be ready to be used.<br \>
+First, download the libraries from [here](https://drive.google.com/file/d/1O_rvaWWaNn3vxDMbxf3GMlabx9sWbiMG/view?usp=sharing). Then, extract it and place the `lib` folder into `extractors/feature_sets/`. Now every extrenal library outside of Python should be ready to be used.
 To run the preprocessing the Stanford CoreNLP library is required. It must be run in a separate terminal before the start of preprocessing. The command to run it from the main project folder is:
 
 ```
@@ -74,7 +74,8 @@ Please pay attention to the mp3 to wav audio file conversion. It takes a lot of 
 After following the prerequisites section, to extract all the features simply run the file `run.py` from the main folder using `python run.py`. The results will be in `data/extracted/`.
 
 ### - Individual Feature Group
-Before running most of the individual scripts, you'll necessarily need to run (always starting from the main folder) `python extractors/preprocess.py`. If you're interest in the audio features you'll also have to run `python mp3_to_wav.py`.
+Before running most of the individual scripts, you'll necessarily need to run (always starting from the main folder)<br />
+`python extractors/preprocess.py`. If you're interest in the audio features you'll also have to run `python mp3_to_wav.py`.
 
 Then, to run any Feature Group, simply run `python extractors/FILE.py`, where "FILE" is the name of the desired file.
 
