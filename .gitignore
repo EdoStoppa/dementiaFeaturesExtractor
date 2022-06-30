@@ -5,8 +5,5 @@ data/extracted
 data/transcripts
 data/pitt_full_interview.pickle
 data/feature_dataset.csv
-extractors/feature_sets/lib/stanford
-extractors/feature_sets/lib/SCA/L2SCA/*
-!extractors/feature_sets/lib/SCA/L2SCA/analyzeText.py
+extractors/feature_sets/lib
 __pycache__
-extractors/feature_sets/lib/SCA/__init__.py
