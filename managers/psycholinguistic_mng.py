@@ -5,6 +5,7 @@ import pickle
 import os
 
 def extract_psycholinguistic(prj_dir: str):
+    print('Psycholinguistic features extraction started!')
     sid = SentimentIntensityAnalyzer()
     
     inter_pickle_path = os.path.join(prj_dir, 'data', 'pitt_full_interview.pickle')
@@ -13,7 +14,7 @@ def extract_psycholinguistic(prj_dir: str):
 
     new_dataframe = []
     for key in data.keys():
-        print('Processing ' + str(key) + '...')
+        print('  Processing ' + str(key) + '...')
         full_interview, label = data[key]
 
         counter = 0
@@ -44,9 +45,7 @@ def extract_psycholinguistic(prj_dir: str):
     final_df = pd.DataFrame(new_dataframe)
     final_df.columns = ['id', 'familiarity', 'concreteness', 'imagability', 'aoa', 'SUBTLFreq', 'average_sentiment']
     final_df.to_csv(final_path, index=False)
+    print('Psycholinguistic features extracted!\n')
 
 if __name__ == '__main__':
-    print('\nPsycholinguistic features extraction started!\n')
     extract_psycholinguistic(os.getcwd())
-    print('\nPsycholinguistic features extraction finished!\n')
-    print('*****************************************************')

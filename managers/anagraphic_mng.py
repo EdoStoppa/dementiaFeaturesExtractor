@@ -22,6 +22,7 @@ def multiclass5(mmse):
     else:            return 4
 
 def extract_anagraphic(prj_dir: str):
+    print('Anagraphic features extraction started!')
     # Open the anagraphic data csv
     anagraphic_path = os.path.join(prj_dir, 'data', 'anagraphic_data', 'anagraphic_data.csv')
     df = pd.read_csv(anagraphic_path)
@@ -33,7 +34,7 @@ def extract_anagraphic(prj_dir: str):
     # Generate the anagraphic features (missing the bin_class feature)
     for index, row in df.iterrows():
         id = str(row['id']).zfill(3)
-        print('Extracting ' + id + '...')
+        print('  Processing ' + id + '...')
         entry_age = int(row['entryage'])
         initial_date = int(row['idate'].split('-')[-1])
 
@@ -89,9 +90,7 @@ def extract_anagraphic(prj_dir: str):
     # Save the anagraphic info
     final_path = os.path.join(prj_dir, 'data', 'extracted', 'anagraphic_info.csv')
     final_dataframe.to_csv(final_path)
+    print('Anagraphic features extracted!\n')
 
 if __name__ == '__main__':
-    print('\nAnagraphic Data extraction started!\n')
     extract_anagraphic(os.getcwd())
-    print('\nAnagraphic Data extraction finished!\n')
-    print('*****************************************************')

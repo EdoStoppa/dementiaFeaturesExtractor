@@ -39,13 +39,5 @@ if __name__ == '__main__':
         os.mkdir(os.path.join('data', 'extracted'))
 
     # Start the feature extraction
-    import datetime, numpy as np
-    millisec = []
-    for _ in range(10):
-        start = datetime.datetime.now()
-        extract_features(prj_dir)
-        end = datetime.datetime.now()
-        millisec.append((end-start).total_seconds())
-        print(f'Iteration {_} complete!\n')
-    print(f'\n\nMean time: {round(np.mean(millisec), 3)}s, Stdev: {round(np.std(millisec), 3)}s')
-    print('\nEverything completed!\n')
+    extract_features(prj_dir)
+    print('\nEverything completed!\n') 
