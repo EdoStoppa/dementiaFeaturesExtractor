@@ -19,7 +19,7 @@ def extract_lexicosyntactic(prj_dir: str):
 
         lexsyn_dict = {'id': key}
         lexsyn_dict.update(get_all_phrases(full_interview))
-        lexsyn_dict.update(get_all_syn(full_interview), prj_dir)
+        lexsyn_dict.update(get_all_syn(full_interview, prj_dir))
 
         new_dataframe.append(lexsyn_dict)
     
