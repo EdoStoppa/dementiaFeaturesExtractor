@@ -7,7 +7,7 @@ The objective of this project is to create a modular program that is able to ext
 I recommend to use Python 3+ and Linux/MacOs to avoid any problems. Unfortunately, to extract some features it's required an old library (from 2016), and some parts of it, for some reason, refuse to work on Windows. It probably can be fixed, but I've no idea how.
 
 ### - External Libraries
-First, download the libraries from [here](https://drive.google.com/file/d/1O_rvaWWaNn3vxDMbxf3GMlabx9sWbiMG/view?usp=sharing). Then, extract it and place the `lib` folder into `managers/extractors/`. Now every extrenal library outside of Python should be ready to be used.
+First, download the libraries from [here](https://drive.google.com/file/d/1JVH9QIOcrK3ewzSzIPnr6q7Gug_Roex9/view?usp=sharing). Then, extract it and place the `lib` folder into `managers/extractors/`. Now every extrenal library outside of Python should be ready to be used.
 To run the preprocessing the Stanford CoreNLP library is required. It must be run in a separate terminal before the start of preprocessing. The command to run it from the main project folder is:
 
 ```
