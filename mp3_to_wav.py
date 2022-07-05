@@ -34,11 +34,22 @@ def create_folders(prj_dir: str):
     if 'audio' not in dirs:
         audio_path = os.path.join(base, 'audio')
         os.mkdir(audio_path)
-        for section in ['Control', 'Dementia']:
-            sect_path = os.path.join(audio_path, section)
-            os.mkdir(sect_path)
-            for test in ['cookie']:
-                os.mkdir(os.path.join(sect_path, test))
+
+    audio_path = os.path.join(base, 'audio')
+    if 'Control' not in os.listdir(audio_path):
+        sect_path = os.path.join(audio_path, 'Control')
+        os.mkdir(sect_path)
+    if 'Dementia' not in os.listdir(audio_path):
+        sect_path = os.path.join(audio_path, 'Dementia')
+        os.mkdir(sect_path)
+    
+    ctrl = os.path.join(audio_path, 'Control')
+    dmt = os.path.join(audio_path, 'Dementia')
+    if 'cookie' not in  os.listdir(ctrl):
+        os.mkdir(os.path.join(ctrl, 'cookie'))
+    if 'cookie' not in  os.listdir(dmt):
+        os.mkdir(os.path.join(dmt, 'cookie'))
+
 
 if __name__ =='__main__':
     print('\nMp3 to Wav conversion started!\n')
