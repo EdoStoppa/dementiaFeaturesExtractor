@@ -136,99 +136,34 @@ WORD TYPE COUNTS
 =============================================================
 """
 
+# Tag lists
+NOUNS = ['NN', 'NNP', 'NNS', 'NNPS']
+VERBS = ['VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
+INFLECTED_VERBS = ['VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
+DETERMINERS = ['DT', 'PDT', 'WDT']
+ADVERBS = ['RB', 'RBR', 'RBS', 'WRB']
+ADJECTIVES = ['JJ', 'JJR', 'JJS']
+INTERJECTIONS = ['UH']
+SUB_CONJUNCTIONS = ['IN']
+COORD_CONJUNCTIONS = ['CC']
 
-# input: NLP object for one paragraph
+
+# input:
+#   nlp_obj: NLP object for one paragraph
+#   tag_list: pos tags that form the desired word type
 # returns: number of normalized nouns in text
-def getNumNouns(nlp_obj):
+def getNumWordType(nlp_obj, tag_list):
 
     pos_freq = nlp_obj['pos_freq']
 
     if pos_freq['SUM'] == 0:
         return 0
-    return (pos_freq['NN'] + pos_freq['NNP'] + pos_freq['NNS'] + pos_freq['NNPS']) / pos_freq['SUM']
 
+    wt_count = 0
+    for tag in tag_list:
+        wt_count += pos_freq[tag]
 
-# input: NLP object for one paragraph
-# returns: number of normalized verbs in text
-def getNumVerbs(nlp_obj):
-
-    pos_freq = nlp_obj['pos_freq']
-    if pos_freq['SUM'] == 0:
-        return 0
-    return (pos_freq['VB'] + pos_freq['VBD'] + pos_freq['VBG'] + pos_freq['VBN'] + pos_freq['VBP'] + pos_freq['VBZ']) / pos_freq['SUM']
-
-
-# input: NLP object for one paragraph
-# returns: number of normalized inflected verbs in text
-def getNumInflectedVerbs(nlp_obj):
-
-    pos_freq = nlp_obj['pos_freq']
-    if pos_freq['SUM'] == 0:
-        return 0
-    return (pos_freq['VBD'] + pos_freq['VBG'] + pos_freq['VBN'] + pos_freq['VBP'] + pos_freq['VBZ']) / pos_freq['SUM']
-
-# input: NLP object for one paragraph
-# returns: number of normalized determiners in text
-
-
-def getNumDeterminers(nlp_obj):
-
-    pos_freq = nlp_obj['pos_freq']
-    if pos_freq['SUM'] == 0:
-        return 0
-    return (pos_freq['DT'] + pos_freq['PDT'] + pos_freq['WDT']) / pos_freq['SUM']
-
-
-# input: NLP object for one paragraph
-# returns: number of normalized adverbs in text
-def getNumAdverbs(nlp_obj):
-
-    pos_freq = nlp_obj['pos_freq']
-    if pos_freq['SUM'] == 0:
-        return 0
-    return (pos_freq['RB'] + pos_freq['RBR'] + pos_freq['RBS'] + pos_freq['WRB']) / pos_freq['SUM']
-
-
-# input: NLP object for one paragraph
-# returns: number of normalized adjectives in text
-def getNumAdjectives(nlp_obj):
-
-    pos_freq = nlp_obj['pos_freq']
-    if pos_freq['SUM'] == 0:
-        return 0
-    return (pos_freq['JJ'] + pos_freq['JJR'] + pos_freq['JJS']) / pos_freq['SUM']
-
-# input: NLP object for one paragraph
-# returns: number of normalized interjections in text
-
-
-def getNumInterjections(nlp_obj):
-
-    pos_freq = nlp_obj['pos_freq']
-    if pos_freq['SUM'] == 0:
-        return 0
-    pos_freq = nlp_obj['pos_freq']
-    return (pos_freq['UH']) / pos_freq['SUM']
-
-
-# input: NLP object for one paragraph
-# returns: number of normalized subordinate conjunctions in text
-def getNumSubordinateConjunctions(nlp_obj):
-
-    pos_freq = nlp_obj['pos_freq']
-    if pos_freq['SUM'] == 0:
-        return 0
-    return (pos_freq['IN']) / pos_freq['SUM']
-
-
-# input: NLP object for one paragraph
-# returns: number of normalized coordinate conjunctions in text
-def getNumCoordinateConjunctions(nlp_obj):
-
-    pos_freq = nlp_obj['pos_freq']
-    if pos_freq['SUM'] == 0:
-        return 0
-    return (pos_freq['CC']) / pos_freq['SUM']
+    return wt_count / pos_freq['SUM']
 
 
 """
@@ -245,8 +180,10 @@ WORD TYPE RATIOS
 def getRatioVerb(nlp_obj):
 
     pos_freq = nlp_obj['pos_freq']
+    num_nouns = pos_freq['NN'] + pos_freq['NNP'] + pos_freq['NNS'] + pos_freq['NNPS']
+    num_verbs = pos_freq['VB'] + pos_freq['VBD'] + pos_freq['VBG'] + pos_freq['VBN'] + pos_freq['VBP'] + pos_freq['VBZ']
 
-    return (pos_freq['NN'] + pos_freq['NNP'] + pos_freq['NNS'] + pos_freq['NNPS']) / (pos_freq['VB'] + pos_freq['VBD'] + pos_freq['VBG'] + pos_freq['VBN'] + pos_freq['VBP'] + pos_freq['VBZ'] + 1)
+    return num_nouns / (num_verbs + 1)
 
 
 # input: NLP object for one paragraph
@@ -266,14 +203,13 @@ def getRatioPronoun(nlp_obj):
 
     pos_freq = nlp_obj['pos_freq']
     num_nouns = pos_freq['NN'] + pos_freq['NNP'] + pos_freq['NNS'] + pos_freq['NNPS']
-
     num_pronouns = pos_freq['PRP'] + pos_freq['PRP$'] + pos_freq['PRP'] + pos_freq['WHP'] + pos_freq['WP$']
 
     return num_pronouns / (num_nouns + 1)
 
 
 # input: NLP object for one paragraph
-# returns: ratio of coordinate- to subordinate conjunctions in the paragraph
+# returns: ratio of coordinate to subordinate conjunctions in the paragraph
 def getRatioCoordinate(nlp_obj):
 
     pos_freq = nlp_obj['pos_freq']
@@ -446,55 +382,25 @@ def getMeanLengthOfSentence(nlp_obj):
 """
 
 # input: NLP object for one paragraph
-# returns: Returns proportion of noun phrases in utterance w.r.t. number of words
-
-
-def getNPProportion(nlp_obj):
-
+# returns: Returns proportion of "tkn_type" phrases in utterance w.r.t. number of words
+def getProportion(nlp_obj, tkn_type):
     word_count = len(nlp_obj['token'])
 
     # Prevent crash
     if word_count == 0:
         return 0
 
-    return getPhraseLength(nlp_obj, 'NP') / word_count
-
-
-# input: NLP object for one paragraph
-# returns: Returns proportion of verb phrases in utterance w.r.t. number of words
-def getVPProportion(nlp_obj):
-
-    word_count = len(nlp_obj['token'])
-
-    # Prevent crash
-    if word_count == 0:
-        return 0
-    return getPhraseLength(nlp_obj, 'VP') / word_count
+    return getPhraseLength(nlp_obj, tkn_type) / word_count
 
 # input: NLP object for one paragraph
-# returns: Returns proportion of preposition phrases in utterance w.r.t. number of words
-
-
-def getPProportion(nlp_obj):
-
-    word_count = len(nlp_obj['token'])
-
-    # Prevent crash
-    if word_count == 0:
-        return 0
-    return getPhraseLength(nlp_obj, 'PP') / word_count
-
-# input: NLP object for one paragraph
-# returns: Returns average length (in words) of noun phrases in utterance w.r.t. number of noun phrases
+# returns: Returns average length (in words) of "tkn_type" phrases in utterance w.r.t. number of "tkn_type" phrases
 # This is embedded so subphrases are also counted
-
-
-def getAvgNPTypeLengthEmbedded(nlp_obj):
+def getAvgLengthEmbedded(nlp_obj, tkn_type):
 
     # phrase length in words summed up
-    phrase_length = getPhraseLength(nlp_obj, 'NP')
+    phrase_length = getPhraseLength(nlp_obj, tkn_type)
 
-    phrase_count = getPhraseCountEmbedded(nlp_obj, 'NP')
+    phrase_count = getPhraseCountEmbedded(nlp_obj, tkn_type)
 
     # Prevent crash
     if phrase_count == 0:
@@ -503,85 +409,14 @@ def getAvgNPTypeLengthEmbedded(nlp_obj):
     return phrase_length / phrase_count
 
 # input: NLP object for one paragraph
-# returns: Returns average length (in words) of verb phrases in utterance w.r.t. number of verb phrases
-# This is embedded so subphrases are also counted
-
-
-def getAvgVPTypeLengthEmbedded(nlp_obj):
-
-    # phrase length in words summed up
-    phrase_length = getPhraseLength(nlp_obj, 'VP')
-
-    phrase_count = getPhraseCountEmbedded(nlp_obj, 'VP')
-
-    # Prevent crash
-    if phrase_count == 0:
-        return 0
-
-    return phrase_length / phrase_count
-
-# input: NLP object for one paragraph
-# returns: Returns average length (in words) of prepositional phrases in utterance w.r.t. number of prepositional phrases
-# This is embedded so subphrases are also counted
-
-
-def getAvgPPTypeLengthEmbedded(nlp_obj):
-
-    # phrase length in words summed up
-    phrase_length = getPhraseLength(nlp_obj, 'PP')
-
-    phrase_count = getPhraseCountEmbedded(nlp_obj, 'PP')
-
-    # Prevent crash
-    if phrase_count == 0:
-        return 0
-
-    return phrase_length / phrase_count
-
-
-# input: NLP object for one paragraph
-# returns: Returns average length (in words) of noun phrases in utterance w.r.t. number of noun phrases
+# returns: Returns average length (in words) of "tkn_type" phrases in utterance w.r.t. number of "tkn_type" phrases
 # This is non-embedded so only the largest phrase type is counted
-def getAvgNPTypeLengthNonEmbedded(nlp_obj):
+def getAvgLengthNonEmbedded(nlp_obj, tkn_type):
 
     # phrase length in words summed up
-    phrase_length = getPhraseLength(nlp_obj, 'NP')
+    phrase_length = getPhraseLength(nlp_obj, tkn_type)
 
-    phrase_count = getPhraseCountNonEmbedded(nlp_obj, 'NP')
-
-    # Prevent crash
-    if phrase_count == 0:
-        return 0
-
-    return phrase_length / phrase_count
-
-
-# input: NLP object for one paragraph
-# returns: Returns average length (in words) of verb phrases in utterance w.r.t. number of verb phrases
-# This is non-embedded so only the largest phrase type is counted
-def getAvgVPTypeLengthNonEmbedded(nlp_obj):
-
-    # phrase length in words summed up
-    phrase_length = getPhraseLength(nlp_obj, 'VP')
-
-    phrase_count = getPhraseCountNonEmbedded(nlp_obj, 'VP')
-
-    # Prevent crash
-    if phrase_count == 0:
-        return 0
-
-    return phrase_length / phrase_count
-
-
-# input: NLP object for one paragraph
-# returns: Returns average length (in words) of prepositional phrases in utterance w.r.t. number of prepositional phrases
-# This is non-embedded so only the largest phrase type is counted
-def getAvgPPTypeLengthNonEmbedded(nlp_obj):
-
-    # phrase length in words summed up
-    phrase_length = getPhraseLength(nlp_obj, 'PP')
-
-    phrase_count = getPhraseCountNonEmbedded(nlp_obj, 'VP')
+    phrase_count = getPhraseCountNonEmbedded(nlp_obj, tkn_type)
 
     # Prevent crash
     if phrase_count == 0:
@@ -590,44 +425,12 @@ def getAvgPPTypeLengthNonEmbedded(nlp_obj):
     return phrase_length / phrase_count
 
 # input: NLP object for one paragraph
-# returns: Returns number of noun phrases divided by the number of words in the sentence
+# returns: Returns number of "tkn_type" phrases divided by the number of words in the sentence
 # ATTENTION we use the nonembbeded count here
-
-
-def getNPTypeRate(nlp_obj):
+def getTypeRate(nlp_obj, tkn_type):
 
     word_count = len(nlp_obj['token'])
-    phrase_count = getPhraseCountNonEmbedded(nlp_obj, 'NP')
-
-    # Prevent crash
-    if word_count == 0:
-        return 0
-
-    return phrase_count / word_count
-
-
-# input: NLP object for one paragraph
-# returns: Returns number of verb phrases divided by the number of words in the sentence
-# ATTENTION we use the nonembbeded count here
-def getVPTypeRate(nlp_obj):
-
-    word_count = len(nlp_obj['token'])
-    phrase_count = getPhraseCountNonEmbedded(nlp_obj, 'VP')
-
-    # Prevent crash
-    if word_count == 0:
-        return 0
-
-    return phrase_count / word_count
-
-
-# input: NLP object for one paragraph
-# returns: Returns number of prepositional phrases  divided by the number of words in the sentence
-# ATTENTION we use the nonembbeded count here
-def getPPTypeRate(nlp_obj):
-
-    word_count = len(nlp_obj['token'])
-    phrase_count = getPhraseCountNonEmbedded(nlp_obj, 'PP')
+    phrase_count = getPhraseCountNonEmbedded(nlp_obj, tkn_type)
 
     # Prevent crash
     if word_count == 0:
@@ -641,8 +444,8 @@ def getPPTypeRate(nlp_obj):
 def get_all(interview):
     features = {}
     # POS counts
-    features["NumNouns"] = sum([getNumNouns(utterance) for utterance in interview]) / len(interview)
-    features["NumVerbs"] = sum([getNumVerbs(utterance) for utterance in interview])
+    features["NumNouns"] = sum([getNumWordType(utterance, NOUNS) for utterance in interview]) / len(interview)
+    features["NumVerbs"] = sum([getNumWordType(utterance, VERBS) for utterance in interview]) / len(interview)
     features["MATTR"] = sum([getMATTR(utterance) for utterance in interview]) / len(interview)
     features["BrunetIndex"] = sum([getBrunetIndex(utterance) for utterance in interview]) / len(interview)
     features["HonoreStatistic"] = sum([getHonoreStatistic(utterance) for utterance in interview]) / len(interview)
@@ -654,15 +457,13 @@ def get_all(interview):
     features["DisfluencyFrequency"] = sum([getDisfluencyFrequency(utterance) for utterance in interview]) / len(interview)
 
     # Phrase features/len(interview)
-    features["NumAdverbs"] = sum([getNumAdverbs(utterance) for utterance in interview]) / len(interview)
-    features["NumAdjectives"] = sum([getNumAdjectives(utterance) for utterance in interview]) / len(interview)
-    features["NumDeterminers"] = sum([getNumDeterminers(utterance) for utterance in interview]) / len(interview)
-    features["NumInterjections"] = sum([getNumInterjections(utterance) for utterance in interview]) / len(interview)
-    features["NumInflectedVerbs"] = sum([getNumInflectedVerbs(utterance) for utterance in interview]) / len(interview)
-    features["NumCoordinateConjunctions"] = sum([getNumCoordinateConjunctions(utterance)
-                                                 for utterance in interview]) / len(interview)
-    features["NumSubordinateConjunctions"] = sum(
-        [getNumSubordinateConjunctions(utterance) for utterance in interview]) / len(interview)
+    features["NumAdverbs"] = sum([getNumWordType(utterance, ADVERBS) for utterance in interview]) / len(interview)
+    features["NumAdjectives"] = sum([getNumWordType(utterance, ADJECTIVES) for utterance in interview]) / len(interview)
+    features["NumDeterminers"] = sum([getNumWordType(utterance, DETERMINERS) for utterance in interview]) / len(interview)
+    features["NumInterjections"] = sum([getNumWordType(utterance, INTERJECTIONS) for utterance in interview]) / len(interview)
+    features["NumInflectedVerbs"] = sum([getNumWordType(utterance, INFLECTED_VERBS) for utterance in interview]) / len(interview)
+    features["NumCoordinateConjunctions"] = sum([getNumWordType(utterance, COORD_CONJUNCTIONS) for utterance in interview]) / len(interview)
+    features["NumSubordinateConjunctions"] = sum([getNumWordType(utterance, SUB_CONJUNCTIONS) for utterance in interview]) / len(interview)
 
     # POS ratios
     features["RatioNoun"] = sum([getRatioNoun(utterance) for utterance in interview]) / len(interview)
@@ -672,23 +473,17 @@ def get_all(interview):
 
     # Weird statistics
     features["TTR"] = sum([getTTR(utterance) for utterance in interview]) / len(interview)
-    features["NPTypeRate"] = sum([getNPTypeRate(utterance) for utterance in interview]) / len(interview)
-    features["VPTypeRate"] = sum([getVPTypeRate(utterance) for utterance in interview]) / len(interview)
-    features["PPTypeRate"] = sum([getPPTypeRate(utterance) for utterance in interview]) / len(interview)
-    features["PProportion"] = sum([getPProportion(utterance) for utterance in interview]) / len(interview)
-    features["NPProportion"] = sum([getNPProportion(utterance) for utterance in interview]) / len(interview)
-    features["VPProportion"] = sum([getVPProportion(utterance) for utterance in interview]) / len(interview)
-    features["AvgNPTypeLengthEmbedded"] = sum([getAvgNPTypeLengthEmbedded(utterance)
-                                               for utterance in interview]) / len(interview)
-    features["AvgVPTypeLengthEmbedded"] = sum([getAvgVPTypeLengthEmbedded(utterance)
-                                               for utterance in interview]) / len(interview)
-    features["AvgPPTypeLengthEmbedded"] = sum([getAvgPPTypeLengthEmbedded(utterance)
-                                               for utterance in interview]) / len(interview)
-    features["AvgPPTypeLengthNonEmbedded"] = sum(
-        [getAvgPPTypeLengthNonEmbedded(utterance) for utterance in interview]) / len(interview)
-    features["AvgNPTypeLengthNonEmbedded"] = sum(
-        [getAvgNPTypeLengthNonEmbedded(utterance) for utterance in interview]) / len(interview)
-    features["AvgVPTypeLengthNonEmbedded"] = sum(
-        [getAvgVPTypeLengthNonEmbedded(utterance) for utterance in interview]) / len(interview)
+    features["NPTypeRate"] = sum([getTypeRate(utterance, 'NP') for utterance in interview]) / len(interview)
+    features["VPTypeRate"] = sum([getTypeRate(utterance, 'VP') for utterance in interview]) / len(interview)
+    features["PPTypeRate"] = sum([getTypeRate(utterance, 'PP') for utterance in interview]) / len(interview)
+    features["NPProportion"] = sum([getProportion(utterance, 'NP') for utterance in interview]) / len(interview)
+    features["VPProportion"] = sum([getProportion(utterance, 'VP') for utterance in interview]) / len(interview)
+    features["PProportion"] = sum([getProportion(utterance, 'PP') for utterance in interview]) / len(interview)
+    features["AvgNPTypeLengthEmbedded"] = sum([getAvgLengthEmbedded(utterance, 'NP') for utterance in interview]) / len(interview)
+    features["AvgVPTypeLengthEmbedded"] = sum([getAvgLengthEmbedded(utterance, 'VP') for utterance in interview]) / len(interview)
+    features["AvgPPTypeLengthEmbedded"] = sum([getAvgLengthEmbedded(utterance, 'PP') for utterance in interview]) / len(interview)
+    features["AvgNPTypeLengthNonEmbedded"] = sum([getAvgLengthNonEmbedded(utterance, 'NP') for utterance in interview]) / len(interview)
+    features["AvgVPTypeLengthNonEmbedded"] = sum([getAvgLengthNonEmbedded(utterance, 'VP') for utterance in interview]) / len(interview)
+    features["AvgPPTypeLengthNonEmbedded"] = sum([getAvgLengthNonEmbedded(utterance, 'PP') for utterance in interview]) / len(interview)
 
     return features

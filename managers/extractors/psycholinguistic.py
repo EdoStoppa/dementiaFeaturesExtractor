@@ -10,8 +10,6 @@ subtlex_data = None
 # -------------------------------------
 
 # Constants
-VERB_POS_TAGS     = ["VB", "VBD", "VBG", "VBN", "VBP", "VBZ"]
-NOUN_POS_TAGS     = ["NN", "NNS", "NNP", "NNPS", ]
 FEATURE_DATA_LIST = ["familiarity", "concreteness", "imageability", 'aoa']
 
 # ================================================

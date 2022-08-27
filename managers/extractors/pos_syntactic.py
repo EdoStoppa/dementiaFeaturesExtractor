@@ -105,34 +105,6 @@ def get_count_of_parent_children(child_types, parent_type, tree_node):
     return count
 
 
-def get_NP_2_PRP(tree_node):
-    return get_count_of_parent_child('PRP', 'NP', tree_node)
-
-
-def get_ADVP_2_RB(tree_node):
-    return get_count_of_parent_child('RP', 'ADVP', tree_node)
-
-
-def get_NP_2_DTNN(tree_node):
-    return get_count_of_parent_children(['DT', 'NN'], 'NP', tree_node)
-
-
-def get_VP_2_VBG(tree_node):
-    return get_count_of_parent_child('VBG', 'VP', tree_node)
-
-
-def get_VP_2_VBGPP(tree_node):
-    return get_count_of_parent_child(['VBG', 'PP'], 'VP', tree_node)
-
-
-def get_VP_2_AUXVP(tree_node, dependents):
-    return get_VP_to_aux_and_more(tree_node, "VP", dependents)
-
-
-def get_VP_2_AUXADJP(tree_node, dependents):
-    return get_VP_to_aux_and_more(tree_node, "ADJP", dependents)
-
-
 def get_VP_to_aux_and_more(tree_node, sibling_to_check, dependents):
     count = 0
     if tree_node.key == 'VP':
@@ -171,18 +143,6 @@ def get_VP_2_AUX(dependencies):
         if dependency['dep'] in auxiliary_dependencies:
             count += 1
     return count
-
-
-def get_VP_2_VBDNP(tree_node):
-    return get_count_of_parent_child(['VBD', 'NP'], 'VP', tree_node)
-
-
-def get_INTJ_2_UH(tree_node):
-    return get_count_of_parent_child('UH', 'INTJ', tree_node)
-
-
-def get_ROOT_2_FRAG(tree_node):
-    return get_count_of_parent_child('FRAG', 'ROOT', tree_node)
 
 
 def get_all_syntactics_features(sample, base_folder=os.getcwd()):
@@ -247,21 +207,21 @@ def get_all_tree_features(sample):
             parse_tree = utterance['parse_tree'][tree]
             root_node = build_tree(parse_tree)
             total_nodes += get_number_of_nodes_in_tree(root_node)
-            features['tree_height'] += get_height_of_tree(root_node)
-            features['NP_to_PRP'] += get_NP_2_PRP(root_node)
-            features['ADVP_to_RB'] += get_ADVP_2_RB(root_node)
-            features['NP_to_DT_NN'] += get_NP_2_DTNN(root_node)
-            features['VP_to_VBG'] += get_VP_2_VBG(root_node)
-            features['VP_to_VBG_PP'] += get_VP_2_VBGPP(root_node)
-            features['VP_to_VBD_NP'] += get_VP_2_VBDNP(root_node)
-            features['INTJ_to_UH'] += get_INTJ_2_UH(root_node)
-            features['ROOT_to_FRAG'] += get_ROOT_2_FRAG(root_node)
+            features['tree_height']  += get_height_of_tree(root_node)
+            features['NP_to_PRP']    += get_count_of_parent_child('PRP', 'NP', root_node)
+            features['ADVP_to_RB']   += get_count_of_parent_child('RP', 'ADVP', root_node)
+            features['NP_to_DT_NN']  += get_count_of_parent_children(['DT', 'NN'], 'NP', root_node)
+            features['VP_to_VBG']    += get_count_of_parent_child('VBG', 'VP', root_node)
+            features['VP_to_VBG_PP'] += get_count_of_parent_child(['VBG', 'PP'], 'VP', root_node)
+            features['VP_to_VBD_NP'] += get_count_of_parent_child(['VBD', 'NP'], 'VP', root_node)
+            features['INTJ_to_UH']   += get_count_of_parent_child('UH', 'INTJ', root_node)
+            features['ROOT_to_FRAG'] += get_count_of_parent_child('FRAG', 'ROOT', root_node)
             # Needs special love
             dependencies = utterance['basic_dependencies'][tree]
             features['VP_to_AUX'] += get_VP_2_AUX(dependencies)
             dependents = get_aux_dependency_dependent(dependencies)
-            features['VP_to_AUX_VP'] += get_VP_2_AUXVP(root_node, dependents)
-            features['VP_to_AUX_ADJP'] += get_VP_2_AUXADJP(root_node, dependents)
+            features['VP_to_AUX_VP'] += get_VP_to_aux_and_more(root_node, "VP", dependents)
+            features['VP_to_AUX_ADJP'] += get_VP_to_aux_and_more(root_node, "ADJP", dependents)
 
     #================ DIVIDING BY NUMBER OF total nodes in the sample ===============#
     for k, v in features.items():

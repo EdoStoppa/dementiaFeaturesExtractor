@@ -15,9 +15,12 @@ STANFORD_DIR = 'stanford-corenlp-full-2015-12-09'
 MEMORY_DIM = '-Xmx4g'
 
 def get_stanford_parse(sentence, port=9000):
+    # Remove ant characters that could give some problems later
     re.sub(r'[^\x00-\x7f]', r'', sentence)
     sentence = util.remove_control_chars(sentence)
+
     try:
+        # Make a request to the Stanford parser that is running locally
         r = requests.post('http://localhost:' + str(port) +
                           '/?properties={\"annotators\":\"parse\",\"outputFormat\":\"json\"}', data=sentence)
     except requests.exceptions.ConnectionError as e:

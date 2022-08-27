@@ -76,8 +76,6 @@ def remove_disfluencies(uttr):
         return ""
 
 # Lemmatize
-
-
 def lemmetize(uttr):
     tokens = nltk.word_tokenize(uttr)
     tagged_words = nltk.pos_tag(tokens)

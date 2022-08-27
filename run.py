@@ -1,3 +1,7 @@
+# Needed to suppress warnings from external libraries
+import warnings
+warnings.filterwarnings("ignore", category=RuntimeWarning)
+
 import os
 import mp3_to_wav
 import merge_data

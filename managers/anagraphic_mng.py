@@ -2,7 +2,11 @@ import pandas as pd
 import pickle
 import os
 
-
+'''
+#############################################################################
+       Functions needed to map MMSE scores to Dementia Severity levels
+#############################################################################
+'''
 def multiclass3(mmse):
     if   mmse >= 24: return 0
     elif mmse >= 18: return 1
@@ -21,17 +25,23 @@ def multiclass5(mmse):
     elif mmse >= 10: return 3
     else:            return 4
 
+
+'''
+#############################################################################
+            Main function that extract the anagraphic features
+#############################################################################
+'''
 def extract_anagraphic(prj_dir: str):
     print('Anagraphic features extraction started!')
     # Open the anagraphic data csv
     anagraphic_path = os.path.join(prj_dir, 'data', 'anagraphic_data', 'anagraphic_data.csv')
     df = pd.read_csv(anagraphic_path)
 
-    imputed_dict_list = []
-
-    visit_dict = {'visit2':1,'visit3':2,'visit4':3,'visit5':4,'visit6':5,'visit7':6}
+    # Mappings between number of visits (string) to int
+    visit_dict = {'visit2': 1,'visit3': 2,'visit4': 3,'visit5': 4,'visit6': 5,'visit7': 6}
 
     # Generate the anagraphic features (missing the bin_class feature)
+    imputed_dict_list = []
     for index, row in df.iterrows():
         id = str(row['id']).zfill(3)
         print('  Processing ' + id + '...')
