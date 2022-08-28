@@ -1,5 +1,10 @@
 # *Dementia Features Extractor*
-The objective of this project is to create a modular program that is able to extract different kind of features from transcripts and audio files from DementiaBank. In particular the data used will be only the part associated with the Cookie Theft Picture test. To download the database, you'll have to get access directly on the [DementiaBank website](https://dementia.talkbank.org/).
+The objective of this project is to create a modular and extensible framework that is able to extract different groups of features from the transcripts and audio files of the DementiaBank dataset. In particular, the data used will be only the part associated with the Cookie Theft Picture test. To download the database, you'll have to get access directly on the [DementiaBank website](https://dementia.talkbank.org/).
+
+---
+
+## Credits
+Most of the code that compute the numerical features is based on [this project](https://github.com/vmasrani/dementia_classifier/tree/master/dementia_classifier/feature_extraction/feature_sets), but it was greatly modified to increase efficiency, to fix some errors, and to reduce code redundancy. For the preprocessing I've taken some parts from [this project](https://github.com/flaviodipalo/AlzheimerDetection), again updating it and fixing some minor errors. 
 
 ---
 
@@ -81,5 +86,17 @@ Then, to run any Feature Group, simply run `python extractors/FILE.py`, where "F
 
 ---
 
-## Credits
-Most of the code that compute the numerical features is an adapted and updated version of [this project](https://github.com/vmasrani/dementia_classifier/tree/master/dementia_classifier/feature_extraction/feature_sets). For the preprocessing I've taken some parts from [this other project](https://github.com/flaviodipalo/AlzheimerDetection). 
+## How to contribute with new Features
+To add a new feature to an already existing group, first create a function that compute the feature and place it in the related extractor. Then add in the `get_all()` function a call to the function that compute the feature and add it to the dictionary that contains all the extracted data. It's as simple as that.
+
+---
+
+## How to contribute with new Feature Groups
+To contribute to this framework with new feature groups, you will need to create 2 different Python files: a group `manager` and a group `extractor`.
+
+### - Group Manager
+This will be mainly in charge of loading any data needed for the extraction, collecting any dictionary containing the extracted features, and saving everything in a csv file. There's no strict rule on how a manager should operate, but the two main types of workflow can be observed in `acoustic_mng.py` and `psycholinguistic_mng.py`, so give them a look before creating a new manager. In the end every manager should have a method called `extract_{FEATURE GROUP NAME}` that execute the feature extraction.
+
+### - Group Extractor
+This is a file (or some files) where all the code needed to the actual extraction of the numerical features is collected. This means that the code will be full of supporting functions or functions that compute a specific feature. For each feature extractor there must be a function called `get_all()` that will use all the other specified functions to collect the features. It will return a dictionary containing the features for a conversation, or a list of dictionaries containing the features
+of the conversations. To better understand how it works, please take a look at `acoustic.py` and at `spatial.py`. For now all extractors and eventual support files will be store in the same folder, but if the file number increases too much we will reorganize the extractor folder using a subfolder for each feature group.
