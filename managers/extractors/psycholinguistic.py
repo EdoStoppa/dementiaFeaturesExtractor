@@ -1,6 +1,7 @@
-from nltk.corpus import stopwords
-import pandas as pd
 import os
+import pandas as pd
+from nltk.corpus import stopwords
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 
 # Made global so files only need to be read once
@@ -80,15 +81,29 @@ def getSUBTLWordScores(interview, subl_path):
 
     return 0 if len(allwords) == 0 else sum(freq) / len(allwords)
 
+# Compute the average sentiment of the conversation
+def getAverageSentiment(interview):
+    sid = SentimentIntensityAnalyzer()
+
+    comp_sentiment_sum = 0
+    for datum in interview:
+        uttr = datum['raw']
+        ss = sid.polarity_scores(uttr)
+        comp_sentiment_sum += ss['compound']
+
+    average_sentiment = 0 if len(interview) == 0 else (comp_sentiment_sum / len(interview))
+    return average_sentiment
+
 # input: list of interview utterances stored as [ [{},{},{}], [{},{},{}] ]
 # returns: list of features for each interview
-def get_psycholinguistic_features(interview, subtl_path, path_to_measures):
+def get_all(interview, subtl_path, path_to_measures):
     feat_dict = {}
     feat_dict["getFamiliarityScore"] = getPsycholinguisticScore(interview, path_to_measures, 'familiarity')
     feat_dict["getConcretenessScore"] = getPsycholinguisticScore(interview, path_to_measures, 'concreteness')
     feat_dict["getImageabilityScore"] = getPsycholinguisticScore(interview, path_to_measures, 'imageability')
     feat_dict["getAoaScore"] = getPsycholinguisticScore(interview, path_to_measures, 'aoa')
     feat_dict["getSUBTLWordScores"] = getSUBTLWordScores(interview, subtl_path)
+    feat_dict['average_sentiment'] = getAverageSentiment(interview)
 
     return feat_dict
 

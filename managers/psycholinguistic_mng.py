@@ -1,12 +1,11 @@
-from extractors.psycholinguistic import get_psycholinguistic_features
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-import pandas as pd
-import pickle
 import os
+import pickle
+import pandas as pd
+from extractors.psycholinguistic import get_all
+
 
 def extract_psycholinguistic(prj_dir: str):
     print('Psycholinguistic features extraction started!')
-    sid = SentimentIntensityAnalyzer()
     
     # Load the processed data
     inter_pickle_path = os.path.join(prj_dir, 'data', 'pitt_full_interview.pickle')
@@ -19,26 +18,17 @@ def extract_psycholinguistic(prj_dir: str):
         # Get a single conversation
         full_interview, label = data[key]
 
-        # Compute the average sentiment of the conversation
-        comp_sentiment_sum = 0
-        for datum in full_interview:
-            uttr = datum['raw']
-            ss = sid.polarity_scores(uttr)
-            comp_sentiment_sum += ss['compound']
-        average_sentiment = 0 if len(full_interview) == 0 else (comp_sentiment_sum / len(full_interview))
-
         # Load all the psycholinguistic metrics + word frequency metric
         subl_path = os.path.join(prj_dir, 'data', 'SUBTLEX', 'SUBTLEX.csv')
         path_to_measures = os.path.join(prj_dir, 'managers', 'extractors', 'psycholing_scores')
 
         # Extract the features
-        dict = get_psycholinguistic_features(full_interview, subl_path, path_to_measures)
-        dict['average_sentiment'] = average_sentiment
+        dict = get_all(full_interview, subl_path, path_to_measures)
 
         # Format the features
         additional_features = []
         for _key, value in dict.items():
-            additional_features.append(value)    
+            additional_features.append(value)
 
         # Save the features
         new_dataframe.append([key] + additional_features)

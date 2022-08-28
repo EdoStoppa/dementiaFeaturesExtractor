@@ -101,7 +101,7 @@ def reorg_columns(anagraphic):
 
     return final_dataframe
 
-def get_anagraphic_data(data_path):
+def get_all(data_path):
     
     partial_data = parse_partial_anagraphic_data(data_path)
     

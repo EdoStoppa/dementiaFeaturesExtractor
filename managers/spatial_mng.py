@@ -1,4 +1,4 @@
-from extractors.spatial import get_spatial_features
+from extractors.spatial import get_all
 import pandas as pd
 import pickle
 import os
@@ -19,7 +19,7 @@ def extract_spatial(prj_dir: str):
         print('  Processing ' + key + '...')
         sp_dict = {'id': key}
         for typ in ['halves', 'strips', 'quadrants']:
-            sp_dict.update(get_spatial_features(full_interview, typ))
+            sp_dict.update(get_all(full_interview, typ))
 
         final_df.append(sp_dict)
 

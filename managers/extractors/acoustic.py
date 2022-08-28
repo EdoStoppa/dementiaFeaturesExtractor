@@ -12,7 +12,7 @@ def get_mean_var_skew_kurt(np_array):
 
 
 # mean, variance, skewness, and kurtosis of the first 14 MFCCs
-def get_mfcc_features(filename):
+def get_all(filename):
     feature_dict = {}
     (rate, sig) = wav.read(filename)
 
@@ -58,24 +58,5 @@ def get_mfcc_features(filename):
 
     feature_dict["mfcc_skewness"] = st.skew(mfcc_means)
     feature_dict["mfcc_kurtosis"] = st.kurtosis(mfcc_means)
+    
     return feature_dict
-
-
-def get_fundamental_frequency_mean_var(filename):
-    ff = np.loadtxt(open(filename, "rb"), usecols=(1,))
-    return ff.mean(), ff.var()
-
-
-def get_all(path):
-    # Extract data from soundfile directory
-    if os.path.exists(path):
-        parsed_data = {}
-        for filename in os.listdir(path):
-            if filename.endswith(".wav"):
-                wavfile = os.path.join(path, filename)
-                feat = get_mfcc_features(wavfile)
-                feat["ff_mean"], feat["ff_var"] = get_fundamental_frequency_mean_var(path + "/pitches/" + filename.replace(".wav", ".txt"))
-                parsed_data[filename.replace('.wav', '')] = feat
-        return parsed_data
-    else:
-        raise IOError("File not found: " + path + " does not exist")

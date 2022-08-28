@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from extractors.acoustic import get_mfcc_features
+from extractors.acoustic import get_all
 
 # Feature truncated
 # TO CHECK : look at https://github.com/jameslyons/python_speech_features/issues/74
@@ -19,7 +19,7 @@ def extract_acoustic(prj_dir: str):
                     # Generate the full path to the wav file
                     wavfile = os.path.join(acoustic_path, label, test, filename)
                     # Extract the features
-                    ac_features = get_mfcc_features(wavfile)
+                    ac_features = get_all(wavfile)
                     # Remove the format substring from the id
                     ac_features['id'] = filename.replace('.wav', '')
                     dict_list.append(ac_features)

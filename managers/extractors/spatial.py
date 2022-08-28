@@ -134,7 +134,7 @@ def compute_features_by_section(words, section_keyset_pairs):
     return feat_dict
 
 # Main function that extract the features based on the photo split provided
-def get_spatial_features(interview, photo_split):
+def get_all(interview, photo_split):
     # First, check if the 
     divisions = ['halves', 'strips', 'quadrants']
     if photo_split not in divisions:
