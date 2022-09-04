@@ -1,5 +1,7 @@
 # *Dementia Features Extractor*
-The objective of this project is to create a modular and extensible framework that is able to extract different groups of features from the transcripts and audio files of the DementiaBank dataset. In particular, the data used will be only the part associated with the Cookie Theft Picture test. To download the database, you'll have to get access directly on the [DementiaBank website](https://dementia.talkbank.org/). This work is published in the proceeding of the 2022 IEEE 7th Forum on Research and Technologies for Society and Industry Innovation: Stoppa, E. and Di Donato, G and Parde, N. and Santambrogio, M. "Computer-Aided Dementia Detection: How Informative are Your Features?" IEEE RTSI 2022.
+The objective of this project is to create a modular and extensible framework that is able to extract different groups of features from the transcripts and audio files of the DementiaBank dataset. In particular, the data used will be only the part associated with the Cookie Theft Picture test. To download the database, you'll have to get access directly on the [DementiaBank website](https://dementia.talkbank.org/).
+
+This work is published in the proceeding of the 2022 IEEE 7th Forum on Research and Technologies for Society and Industry Innovation: Stoppa, E. and Di Donato, G and Parde, N. and Santambrogio, M. "Computer-Aided Dementia Detection: How Informative are Your Features?" IEEE RTSI 2022.
 
 ---
 
