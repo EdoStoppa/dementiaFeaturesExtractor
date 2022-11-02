@@ -86,11 +86,11 @@ def clean_file(input_file):
                 cleaned_string = re.sub(r'(\?|\!)', '.', element) #element.replace('?', '.')
                 # remove pause pattern.
                 cleaned_string =  re.sub(r'\([\d]*(\.)+[\d]*\)\s', '', cleaned_string)
-                #remove any word after the period.
+                # remove any word after the period.
                 cleaned_string = cleaned_string.split('.', 1)[0]
-                #replace par with empty string, deleting the part of the string that starts with PAR
+                # replace par with empty string, deleting the part of the string that starts with PAR
                 cleaned_string = re.sub(r'[^\w]+', ' ', cleaned_string.replace('*PAR',''))
-                #substitute numerical digits, deleting underscores
+                # substitute numerical digits, deleting underscores
                 cleaned_string = re.sub(r'[\d]+','',cleaned_string.replace('_',''))
                 cleaned_file.append(cleaned_string)
     return cleaned_file, id

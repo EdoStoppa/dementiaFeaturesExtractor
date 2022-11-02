@@ -178,7 +178,7 @@ def get_all(interview, photo_split):
 
     if photo_split == 'quadrants':
 
-         # This will extract:
+        # This will extract:
         #    1) NW_keywords
         #       (These are keywords which only appear in the North-West quadrant of the image)
         #    2) NE_keywords
