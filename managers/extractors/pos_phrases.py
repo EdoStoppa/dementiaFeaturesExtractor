@@ -275,8 +275,6 @@ def getBrunetIndex(nlp_obj):
 
 # input: NLP object for one paragrah
 # returns: Honore statistic for that paragraph
-
-
 def getHonoreStatistic(nlp_obj):
 
     # number of word types
@@ -315,8 +313,6 @@ def getMeanWordLength(nlp_obj):
 
 # input: NLP object for one paragrah
 # returns: number of NID words (length > 2) in paragraph
-
-
 def getNumberOfNID(nlp_obj):
 
     pos_tag = nlp_obj['pos']
@@ -327,8 +323,6 @@ def getNumberOfNID(nlp_obj):
 
 # input: NLP object for one paragraph
 # returns: normalized number of "uh" and "um"
-
-
 def getDisfluencyFrequency(nlp_obj):
 
     tokens = nlp_obj['token']
@@ -356,8 +350,6 @@ def getTotalNumberOfWords(nlp_obj):
 
 # input: NLP object for one paragraph
 # returns: Returns mean length of sentence w.r.t. number of words
-
-
 def getMeanLengthOfSentence(nlp_obj):
 
     raw_text = nlp_obj['raw']
